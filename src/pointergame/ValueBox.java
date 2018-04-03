@@ -18,8 +18,15 @@ public class ValueBox extends Box {
     }
     
     //Setters
-    void setContents(char value)
+    public void setContents(char value)
     {
         content = value;
+    }
+    
+    //Util
+    public void showChain(int indentLevel)
+    {
+        indentPad(indentLevel);
+        System.out.println("ValueBox storing " + content);
     }
 }

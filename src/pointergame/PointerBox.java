@@ -17,17 +17,36 @@ public class PointerBox extends Box{
         super(x, y, origin);
         this.pointingTo = pointingTo;
     }
+    PointerBox(int x, int y, PointerBox origin)
+    {
+        super(x, y, origin);
+        this.pointingTo = BadBox.getInstance();
+    }
 
     //Mutators
-    void setPointer(Box dest)
+    public void setPointer(Box dest)
     {
         pointingTo = dest;
     }
     
     //Getters
-    Box getDest()
+    public Box getDest()
     {
         return pointingTo;
     }
     
+    //Util
+    public void showChain()
+    {       
+        System.out.print("PointerBox pointing to ");
+
+        if(pointingTo == null)
+        {
+            System.out.println("null");
+        }
+        else
+        {
+            pointingTo.showChain();
+        }
+    }
 }

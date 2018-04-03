@@ -26,6 +26,21 @@ public class PointerGame {
     }
     
     public static void main(String[] args) {
+        System.out.println("Program");
+        PointerBox src = new PointerBox(0, 0, null, null);
+        src.setPointer(new ValueBox(0,0,src,'d'));
+        src = new PointerBox(0,0,null,src);
+        
+        src.showChain();
+        BadBox.getInstance().showChain();
+        
+        src = new PointerBox(0,0,null);
+        src.showChain();
+        src.setPointer(new ValueBox(0,0,src,'g'));
+        src.showChain();
+        
+        BoxArray testBA = new BoxArray(0,0, null, 10);
+        testBA.showChain();
         //createGui();
     }
     
