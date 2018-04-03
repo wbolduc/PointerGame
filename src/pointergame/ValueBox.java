@@ -12,8 +12,8 @@ package pointergame;
 public class ValueBox extends Box {
     private char content;
 
-    ValueBox(int x, int y, PointerBox origin, char value) {
-        super(x, y, origin);
+    ValueBox(int x, int y, char value) {
+        super(x, y);
         content = value;
     }
     

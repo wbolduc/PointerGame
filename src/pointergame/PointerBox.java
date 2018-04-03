@@ -12,14 +12,9 @@ package pointergame;
 public class PointerBox extends Box{
     private Box pointingTo = null;
 
-    PointerBox(int x, int y, PointerBox origin, Box pointingTo)
+    PointerBox(int x, int y)
     {
-        super(x, y, origin);
-        this.pointingTo = pointingTo;
-    }
-    PointerBox(int x, int y, PointerBox origin)
-    {
-        super(x, y, origin);
+        super(x,y);
         this.pointingTo = BadBox.getInstance();
     }
 
@@ -27,6 +22,7 @@ public class PointerBox extends Box{
     public void setPointer(Box dest)
     {
         pointingTo = dest;
+        dest.addOrigin(this);
     }
     
     //Getters
@@ -36,8 +32,10 @@ public class PointerBox extends Box{
     }
     
     //Util
-    public void showChain()
-    {       
+    public void showChain(int indentLevel)
+    {   
+        indentPad(indentLevel);
+        
         System.out.print("PointerBox pointing to ");
 
         if(pointingTo == null)

@@ -20,15 +20,13 @@ public class Box {
     private int x;
     private int y;
     
-    private ArrayList<PointerBox> pointedBy = new ArrayList<PointerBox>();
-    
-    Box(int x, int y, PointerBox origin)
+    private ArrayList<Box> pointedToBy = new ArrayList<Box>();
+
+    Box(int x, int y)
     {
         this.x = x;
         this.y = y;
-        
-        pointedBy.add(origin);
-    }
+    }        
     
     //Setters
     public void setX(int x)
@@ -46,15 +44,13 @@ public class Box {
     }
     
     //mutators
-    public void addOrigin(PointerBox origin)
+    public void addOrigin(Box origin)
     {
-        origin.setPointer(this);
-        pointedBy.add(origin);
+        pointedToBy.add(origin);
     }
-    public void removeOrigin(PointerBox origin)
+    public void removeOrigin(Box origin)
     {
-        origin.setPointer(null);
-        pointedBy.remove(origin);
+        pointedToBy.remove(origin);
     }
     
     //Getters
@@ -66,9 +62,9 @@ public class Box {
     {
         return y;
     }
-    public ArrayList<PointerBox> getOrigins()
+    public ArrayList<Box> getOrigins()
     {
-        return pointedBy;
+        return pointedToBy;
     }
     
     //Util

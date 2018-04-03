@@ -25,23 +25,45 @@ public class PointerGame {
         frame.setVisible(true);
     }
     
+    static void lineBreak()
+    {
+        System.out.println("----------------------------------------------------------");
+    }
+    
+    
     public static void main(String[] args) {
-        System.out.println("Program");
-        PointerBox src = new PointerBox(0, 0, null, null);
-        src.setPointer(new ValueBox(0,0,src,'d'));
-        src = new PointerBox(0,0,null,src);
+
+        StructDefinition linkedDef = new StructDefinition("linkedNode");
+        linkedDef.addTypePair("data", PointerBox.class);
+        linkedDef.addTypePair("next", PointerBox.class);
         
-        src.showChain();
-        BadBox.getInstance().showChain();
+        BoxStruct testBS = new BoxStruct(0,0,linkedDef);
         
-        src = new PointerBox(0,0,null);
-        src.showChain();
-        src.setPointer(new ValueBox(0,0,src,'g'));
-        src.showChain();
+        lineBreak();
+        //list of strings
+        String [] strings = {"hello", "pointer", "test"};
         
-        BoxArray testBA = new BoxArray(0,0, null, 10);
-        testBA.showChain();
-        //createGui();
+        PointerBox stringArrayPointer = new PointerBox(0,0);
+        stringArrayPointer.setPointer(new BoxArray(0,0, strings.length, PointerBox.class));
+        
+        stringArrayPointer.showChain();
+        lineBreak();
+        
+        for (int i = 0; i < strings.length; i++)
+        {
+            BoxArray charArray = new BoxArray(0,0,strings[i].length(), ValueBox.class);
+            for (int j = 0; j < strings[i].length(); j++)
+            {
+                charArray.setBoxAt(new ValueBox(0,0,strings[i].charAt(j)), j);                
+            }
+            
+            PointerBox charArrayPointer = new PointerBox(0,0);
+            charArrayPointer.setPointer(charArray);
+            
+            ((BoxArray)stringArrayPointer.getDest()).setBoxAt(charArrayPointer, i);
+        }
+        
+        stringArrayPointer.showChain();
     }
     
 }   
