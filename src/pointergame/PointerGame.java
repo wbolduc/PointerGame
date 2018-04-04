@@ -34,9 +34,30 @@ public class PointerGame {
     
     public static void main(String[] args) {
 
-
+        Element numerator   = new Element("numerator", ValueBox.class);
+        Element denominator = new Element("denominator", ValueBox.class);
+        ArrayList<Element> structContents = new ArrayList<Element>();
+        structContents.add(numerator);
+        structContents.add(denominator);
+        Element fractionStruct = new StructElement("Fraction", structContents);
         
+        Element name        = new ArrayElement("name", new Element(ValueBox.class), 5);
+        structContents = new ArrayList<Element>();
+        structContents.add(name);
+        structContents.add(fractionStruct);
+        Element studentStruct = new StructElement("Student", structContents);
+
+        Element studentArray = new ArrayElement("students", studentStruct, 10);
+        
+        structContents = new ArrayList<Element>();
+        structContents.add(new ArrayElement("profName", new Element(ValueBox.class),20));
+        structContents.add(studentArray);
+        Element classRoom = new StructElement("ClassStruct", structContents);
+        
+        classRoom.printStructure();
         lineBreak();
+        return;
+        
         //list of strings
         String [] strings = {"hello", "pointer", "test"};
         
@@ -62,7 +83,15 @@ public class PointerGame {
         
         stringArrayPointer.showChain();
     }
-    
+
+    //Util
+    public static String indentPad(int padSize) {
+        String indent = "";
+        for (int i = 0; i < padSize; i++) {
+            indent += " ";
+        }
+        return indent;
+    }
 }   
 
 class MyCanvas extends JComponent

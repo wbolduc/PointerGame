@@ -81,7 +81,7 @@ public class BoxArray extends Box{
     
     public void showChain(int indentLevel)
     {
-        indentPad(indentLevel);
+        PointerGame.indentPad(indentLevel);
         System.out.println("Array of size " + Integer.toString(arraySize));
         for (Box b : boxes)
         {

@@ -26,7 +26,7 @@ public class ValueBox extends Box {
     //Util
     public void showChain(int indentLevel)
     {
-        indentPad(indentLevel);
+        PointerGame.indentPad(indentLevel);
         System.out.println("ValueBox storing " + content);
     }
 }

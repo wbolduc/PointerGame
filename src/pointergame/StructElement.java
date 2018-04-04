@@ -5,39 +5,47 @@
  */
 package pointergame;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author wbolduc
  */
-public class StructElement
+public class StructElement extends Element
 {
+    private final ArrayList<Element> structElements;
     private final String name;
-    private final Class type;
-    private final StructDefinition structure;
-
-    StructElement(String name, Class type)
-    {
-        this.name = name;
-        this.type = type;
-        structure = null;
-    }
-    StructElement(String name, StructDefinition structure)
-    {
-        this.name = name;
-        type = StructDefinition.class;
-        this.structure = structure;
-    }
     
+    StructElement(String name, ArrayList<Element> structElements)
+    {
+        super(BoxStruct.class);
+        this.name = name;
+        this.structElements = structElements;
+    }
+
     public String getName()
     {
         return name;
     }
-    public Class getType()
+    
+    public ArrayList<Element> getStructElements()
     {
-        return type;
+        return structElements;
     }
-    public StructDefinition getStructure()
+    
+    public void printStructure(String indent, boolean inline)
     {
-        return structure;
+        if (inline == false)
+            System.out.print(indent);
+        
+        System.out.println("Struct: " + name);
+        indent += "      | ";
+        
+        for (Element e : structElements)
+        {
+            System.out.print(indent);
+            System.out.print(e.getName() + ": ");
+            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2), true);
+        }
     }
 }

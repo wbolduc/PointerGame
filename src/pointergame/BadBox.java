@@ -29,7 +29,7 @@ public class BadBox extends Box{
     
     public void showChain(int indentLevel)
     {
-        indentPad(indentLevel);
+        PointerGame.indentPad(indentLevel);
         System.out.println("Bad Memory");        
     }
 }

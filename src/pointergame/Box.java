@@ -66,21 +66,14 @@ public class Box {
     {
         return pointedToBy;
     }
-    
-    //Util
-    void indentPad(int padSize)
-    {
-        for (int i = 0; i < padSize; i++)
-            System.out.print("  ");
-    }
-    
+        
     public void showChain()
     {
         this.showChain(0);
     }
     public void showChain(int indentLevel)
     {
-        indentPad(indentLevel);
+        PointerGame.indentPad(indentLevel);
         System.out.println(this.toString() + "     --- if you are seeing this I have not finished implementing this");
     }
     
