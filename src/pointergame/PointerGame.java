@@ -6,6 +6,7 @@
 package pointergame;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -33,18 +34,14 @@ public class PointerGame {
     
     public static void main(String[] args) {
 
-        StructDefinition linkedDef = new StructDefinition("linkedNode");
-        linkedDef.addTypePair("data", PointerBox.class);
-        linkedDef.addTypePair("next", PointerBox.class);
-        
-        BoxStruct testBS = new BoxStruct(0,0,linkedDef);
+
         
         lineBreak();
         //list of strings
         String [] strings = {"hello", "pointer", "test"};
         
         PointerBox stringArrayPointer = new PointerBox(0,0);
-        stringArrayPointer.setPointer(new BoxArray(0,0, strings.length, PointerBox.class));
+        stringArrayPointer.setPointer(new BoxArray(0, 0, strings.length, PointerBox.class));
         
         stringArrayPointer.showChain();
         lineBreak();

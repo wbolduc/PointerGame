@@ -1,7 +1,8 @@
 package pointergame;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,23 +16,20 @@ import java.util.HashMap;
  */
 public class StructDefinition
 {
-    String name;
-    HashMap<String, Class> types;
+    private final String name;
+    private final ArrayList<StructElement> elements;
     
-    StructDefinition(String name, HashMap<String, Class> types)
+    StructDefinition(String name, ArrayList<StructElement> elements)
     {
         this.name = name;
-        this.types = types;
+        this.elements = elements;
     }
-    StructDefinition(String name)
-    {
-        this.name = name;
-        this.types = new HashMap<String, Class>();
+
+    public String getName() {
+        return name;
     }
-    
-    //Mutators
-    public void addTypePair(String name, Class type)
-    {
-        types.put(name, type);
+
+    public ArrayList<StructElement> getElements() {
+        return elements;
     }
 }
