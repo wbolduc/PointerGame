@@ -11,10 +11,16 @@ package pointergame;
  */
 public class ValueBox extends Box {
     private char content;
+    private boolean uninitialized = true;
 
     ValueBox(int x, int y, char value) {
         super(x, y);
         content = value;
+        uninitialized = false;
+    }
+    
+    ValueBox(int x, int y) {
+        super(x, y);
     }
     
     //Setters

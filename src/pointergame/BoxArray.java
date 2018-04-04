@@ -15,18 +15,29 @@ import java.util.ArrayList;
 public class BoxArray extends Box{
     private ArrayList<Box> boxes = new ArrayList<Box>();;
     private int arraySize;
-    private Class boxType;
+    private Element boxType;
     
-    BoxArray(int x, int y, int arraySize, Class boxType)
+    BoxArray(int x, int y, ArrayElement arrayDef)
     {
         super(x, y);
-        
-        this.boxType = boxType;
-        this.arraySize = arraySize;
-        
-        for (int i = 0; i < arraySize; i++)
+
+        boxType = arrayDef.getType();
+        arraySize = arrayDef.getArraySize();
+
+        if (boxType instanceof StructElement)
+            for (int i = 0; i < arraySize; i++)
+                boxes.add(new BoxStruct(0, 0, (StructElement) boxType));
+        else if (boxType instanceof ArrayElement)
+            for (int i = 0; i < arraySize; i++)
+                boxes.add(new BoxArray(0, 0, (ArrayElement) boxType));
+        else
         {
-            boxes.add(BadBox.getInstance());
+            if (boxType.getElementType() == PointerBox.class)
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new PointerBox(0, 0));
+            else //valueBox
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new ValueBox(0, 0));
         }
     }
     
@@ -44,11 +55,13 @@ public class BoxArray extends Box{
         }
         
         //check for matching type
-        if (box.getClass() != boxType)
+        
+        //TODO: FIX THIS
+        /*if (box.getClass() != boxType)
         {
             System.err.println("Wrong box type cannot store");
             return;
-        }
+        }*/
         
         boxes.set(index, box);
     }

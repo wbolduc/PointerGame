@@ -34,14 +34,16 @@ public class PointerGame {
     
     public static void main(String[] args) {
 
-        Element numerator   = new Element("numerator", ValueBox.class);
+        //test printing
+        //Franction Struct
+        Element numerator = new Element("numerator", ValueBox.class);
         Element denominator = new Element("denominator", ValueBox.class);
         ArrayList<Element> structContents = new ArrayList<Element>();
         structContents.add(numerator);
         structContents.add(denominator);
-        Element fractionStruct = new StructElement("Fraction", structContents);
-        
-        Element name        = new ArrayElement("name", new Element(ValueBox.class), 5);
+        StructElement fractionStruct = new StructElement("Fraction", structContents);
+
+        Element name = new ArrayElement("name", new Element(ValueBox.class), 5);
         structContents = new ArrayList<Element>();
         structContents.add(name);
         structContents.add(fractionStruct);
@@ -52,11 +54,14 @@ public class PointerGame {
         structContents = new ArrayList<Element>();
         structContents.add(new ArrayElement("profName", new Element(ValueBox.class),20));
         structContents.add(studentArray);
-        Element classRoom = new StructElement("ClassStruct", structContents);
+        StructElement classRoom = new StructElement("ClassStruct", structContents);
         
         classRoom.printStructure();
         lineBreak();
         
+        BoxStruct classRoomStruct = new BoxStruct(0,0, classRoom);
+        
+        return;
         //list of strings
         String [] strings = {"hello", "pointer", "test"};
         
