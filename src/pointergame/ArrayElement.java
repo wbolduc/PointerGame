@@ -36,10 +36,10 @@ public class ArrayElement extends Element{
         return arraySize;
     }
     
-    public void printStructure(String indent, boolean inline)
+    public void printStructure(String indent)
     {
         String output = "Array of " + Integer.toString(arraySize) + " ";
         System.out.print(output);
-        type.printStructure(indent + PointerGame.indentPad(output.length()), true);
+        type.printStructure(indent + PointerGame.indentPad(output.length()));
     }
 }

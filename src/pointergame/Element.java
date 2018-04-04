@@ -6,7 +6,7 @@
 package pointergame;
 
 /**
- *
+ *  Elements are used to describe the structure of structs or arrays in an unchanging manner
  * @author wbolduc
  */
 
@@ -36,13 +36,11 @@ public class Element {
     
     public void printStructure()
     {
-        this.printStructure("", true);
+        this.printStructure("");
     }
     
-    public void printStructure(String indent, boolean inline)
+    public void printStructure(String indent)
     {
-        if (inline == false)
-            System.out.print(indent);
         System.out.println(elementType.getName().substring("pointergame.".length()));
     }
     

@@ -47,7 +47,7 @@ public class PointerGame {
         structContents.add(fractionStruct);
         Element studentStruct = new StructElement("Student", structContents);
 
-        Element studentArray = new ArrayElement("students", studentStruct, 10);
+        Element studentArray = new ArrayElement("students", studentStruct, 30);
         
         structContents = new ArrayList<Element>();
         structContents.add(new ArrayElement("profName", new Element(ValueBox.class),20));
@@ -56,7 +56,6 @@ public class PointerGame {
         
         classRoom.printStructure();
         lineBreak();
-        return;
         
         //list of strings
         String [] strings = {"hello", "pointer", "test"};

@@ -33,11 +33,8 @@ public class StructElement extends Element
         return structElements;
     }
     
-    public void printStructure(String indent, boolean inline)
-    {
-        if (inline == false)
-            System.out.print(indent);
-        
+    public void printStructure(String indent)
+    {        
         System.out.println("Struct: " + name);
         indent += "      | ";
         
@@ -45,7 +42,7 @@ public class StructElement extends Element
         {
             System.out.print(indent);
             System.out.print(e.getName() + ": ");
-            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2), true);
+            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2));
         }
     }
 }
