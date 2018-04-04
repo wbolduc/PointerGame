@@ -30,9 +30,11 @@ public class ValueBox extends Box {
     }
     
     //Util
-    public void showChain(int indentLevel)
+    public void showChain(String indent)
     {
-        PointerGame.indentPad(indentLevel);
-        System.out.println("ValueBox storing " + content);
+        if (uninitialized == true)
+            System.out.println("Uninitialized ValueBox");
+        else
+            System.out.println("ValueBox storing " + content);
     }
 }

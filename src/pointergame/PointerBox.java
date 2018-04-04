@@ -32,12 +32,10 @@ public class PointerBox extends Box{
     }
     
     //Util
-    public void showChain(int indentLevel)
+    public void showChain(String indent)
     {   
-        PointerGame.indentPad(indentLevel);
-        
+        System.out.print(indent);        
         System.out.print("PointerBox pointing to ");
-
         if(pointingTo == null)
         {
             System.out.println("null");

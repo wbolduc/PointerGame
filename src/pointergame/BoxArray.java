@@ -76,6 +76,11 @@ public class BoxArray extends Box{
         return boxes.get(index);
     }
     
+    public Element getBoxType()
+    {
+        return boxType;
+    }
+    
     //Util    
     private boolean inRange(int index)
     {
@@ -92,20 +97,23 @@ public class BoxArray extends Box{
         return true;
     }
     
-    public void showChain(int indentLevel)
+    public void showChain(String indent)
     {
-        PointerGame.indentPad(indentLevel);
-        System.out.println("Array of size " + Integer.toString(arraySize));
+        String output = "Array of size " + Integer.toString(arraySize);
+        
+        System.out.println(output);
+        
+        indent += Box.MIN_INDENT + "| ";
         for (Box b : boxes)
         {
+            System.out.print(indent);
             if (b == null)
             {
-                indentPad(indentLevel + 1);
                 System.out.println("null");
             }
             else
             {
-                b.showChain(indentLevel + 1);
+                b.showChain(indent);
             }
         }
     }

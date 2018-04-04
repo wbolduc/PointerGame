@@ -36,6 +36,28 @@ public class BoxStruct extends Box{
                     elements.put(e.getName(), new ValueBox(0,0));
             }
         }
-        
     }
+    
+    public void showChain(String indent)
+    {
+        String structName = structDef.getName();
+        System.out.println(structName);
+        indent += Box.MIN_INDENT + "| ";
+        for (Map.Entry<String,Box> e : elements.entrySet())
+        {
+            String name = e.getKey();
+            Box content = e.getValue();
+            
+            System.out.print(indent + name + ": ");
+            
+            if (content instanceof PointerBox)
+                ((PointerBox)content).showChain(indent);
+            else if (content instanceof ValueBox)
+                ((ValueBox)content).showChain(indent);
+            else if (content instanceof BoxStruct)
+                ((BoxStruct)content).showChain(indent + PointerGame.indentPad(name.length()));
+            else if (content instanceof BoxArray)
+                ((BoxArray)content).showChain(indent + PointerGame.indentPad(name.length()));
+        }
+    }   
 }

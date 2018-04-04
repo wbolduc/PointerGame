@@ -43,23 +43,31 @@ public class PointerGame {
         structContents.add(denominator);
         StructElement fractionStruct = new StructElement("Fraction", structContents);
 
+        BoxStruct temp = new BoxStruct(0,0, fractionStruct);
+        temp.showChain();
+        lineBreak();
+
+        //student struct
         Element name = new ArrayElement("name", new Element(ValueBox.class), 5);
         structContents = new ArrayList<Element>();
         structContents.add(name);
         structContents.add(fractionStruct);
-        Element studentStruct = new StructElement("Student", structContents);
+        StructElement studentStruct = new StructElement("Student", structContents);
 
-        Element studentArray = new ArrayElement("students", studentStruct, 30);
+        temp = new BoxStruct(0,0, studentStruct);
+        temp.showChain();
+        lineBreak();
         
+        Element studentArray = new ArrayElement("students", studentStruct, 3);
         structContents = new ArrayList<Element>();
-        structContents.add(new ArrayElement("profName", new Element(ValueBox.class),20));
+        structContents.add(new Element("Rating", ValueBox.class));
+        structContents.add(new ArrayElement("profName", new Element(ValueBox.class),10));
         structContents.add(studentArray);
         StructElement classRoom = new StructElement("ClassStruct", structContents);
         
-        classRoom.printStructure();
+        temp = new BoxStruct(0,0, classRoom);
+        temp.showChain();
         lineBreak();
-        
-        BoxStruct classRoomStruct = new BoxStruct(0,0, classRoom);
         
         return;
         //list of strings

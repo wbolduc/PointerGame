@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class Box {    
     public static final int BOX_SIZE = 20;
+    public static final String MIN_INDENT = "  ";
     private int x;
     private int y;
     
@@ -69,11 +70,10 @@ public class Box {
         
     public void showChain()
     {
-        this.showChain(0);
+        this.showChain("");
     }
-    public void showChain(int indentLevel)
+    public void showChain(String indent)
     {
-        PointerGame.indentPad(indentLevel);
         System.out.println(this.toString() + "     --- if you are seeing this I have not finished implementing this");
     }
     
