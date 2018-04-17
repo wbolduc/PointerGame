@@ -6,6 +6,7 @@
 package pointergame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -67,7 +68,37 @@ public class Box {
     {
         return pointedToBy;
     }
+    
+    /*    
+    //pointer expression generation
+    public String getExpressionTo(Box dest)
+    {
+        return getExpressionTo(dest, new HashSet<Box>());
+    }
+    private String getExpressionTo(Box dest, HashSet<Box> visited)
+    {//depth first search
+        visited.add(this);
+        for (Box e : pointedToBy)
+        {
+            if (visited.contains(e))
+                continue;
+            else if (e == dest)
+                this.generateAccessExpression(dest);
+            else
+            {
+                String ret = e.getExpressionTo(dest, visited);
+                
+            }            
+        }
         
+    }
+    
+    private String generateAccessExpression(Box toAccess)
+    {
+        System.err.println(this.toString() + " generateAccessExpression not implemented");
+        return "Oh Nooo!";
+    }
+    */
     public void showChain()
     {
         this.showChain("");

@@ -43,10 +43,6 @@ public class PointerGame {
         structContents.add(denominator);
         StructElement fractionStruct = new StructElement("Fraction", structContents);
 
-        BoxStruct temp = new BoxStruct(0,0, fractionStruct);
-        temp.showChain();
-        lineBreak();
-
         //student struct
         Element name = new ArrayElement("name", new Element(ValueBox.class), 5);
         structContents = new ArrayList<Element>();
@@ -54,46 +50,22 @@ public class PointerGame {
         structContents.add(fractionStruct);
         StructElement studentStruct = new StructElement("Student", structContents);
 
-        temp = new BoxStruct(0,0, studentStruct);
-        temp.showChain();
-        lineBreak();
-        
+        //make an array of students
         Element studentArray = new ArrayElement("students", studentStruct, 3);
+        
+        //Classroom Struct
         structContents = new ArrayList<Element>();
         structContents.add(new Element("Rating", ValueBox.class));
         structContents.add(new ArrayElement("profName", new Element(ValueBox.class),10));
         structContents.add(studentArray);
         StructElement classRoom = new StructElement("ClassStruct", structContents);
         
-        temp = new BoxStruct(0,0, classRoom);
+        
+        BoxStruct temp = new BoxStruct(0,0, classRoom);
+        classRoom.printStructure();
+        lineBreak();
         temp.showChain();
         lineBreak();
-        
-        return;
-        //list of strings
-        String [] strings = {"hello", "pointer", "test"};
-        
-        PointerBox stringArrayPointer = new PointerBox(0,0);
-        stringArrayPointer.setPointer(new BoxArray(0, 0, strings.length, PointerBox.class));
-        
-        stringArrayPointer.showChain();
-        lineBreak();
-        
-        for (int i = 0; i < strings.length; i++)
-        {
-            BoxArray charArray = new BoxArray(0,0,strings[i].length(), ValueBox.class);
-            for (int j = 0; j < strings[i].length(); j++)
-            {
-                charArray.setBoxAt(new ValueBox(0,0,strings[i].charAt(j)), j);                
-            }
-            
-            PointerBox charArrayPointer = new PointerBox(0,0);
-            charArrayPointer.setPointer(charArray);
-            
-            ((BoxArray)stringArrayPointer.getDest()).setBoxAt(charArrayPointer, i);
-        }
-        
-        stringArrayPointer.showChain();
     }
 
     //Util
