@@ -29,7 +29,7 @@ public class PointerVisualizer extends JPanel{
         for(Box b : boxes)
         {
             System.out.println("boop");
-            g2d.drawRect(b.getX(), b.getY(), 30, 30);
+            b.drawBox(g);
         }
     }
     

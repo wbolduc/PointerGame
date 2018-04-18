@@ -5,7 +5,9 @@
  */
 package pointergame;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
+import static pointergame.Box.BOX_SIZE;
 
 /**
  *
@@ -16,6 +18,9 @@ public class BoxArray extends Box{
     private ArrayList<Box> boxes = new ArrayList<Box>();;
     private int arraySize;
     private Element boxType;
+    
+    //used for graphics
+    private Orientation orientation = Orientation.HORIZONTAL;
     
     BoxArray(int x, int y, ArrayElement arrayDef)
     {
@@ -118,4 +123,10 @@ public class BoxArray extends Box{
         }
     }
     
+    
+    //Graphics
+    public void drawBox(Graphics g)
+    {
+        
+    }
 }

@@ -17,17 +17,22 @@ import javax.swing.JFrame;
 public class PointerGame {
         
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Mini Tennis");
+        JFrame frame = new JFrame("PointerVisualizer");
 	PointerVisualizer pv = new PointerVisualizer();
 	frame.add(pv);
-	frame.setSize(300, 400);
+	frame.setSize(1000, 1000);
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
         
+        //TODO: badBox should not be a singleton
+        PointerBox pb = new PointerBox(10,20);
+        ValueBox vb = new ValueBox(50,50);
         
-        pv.addBox(new PointerBox(10,20));
-        pv.addBox(new ValueBox(50,50));
+        pb.setPointer(vb);
+        
+        pv.addBox(pb);
+        pv.addBox(vb);
         pv.repaint();
         
     }

@@ -5,6 +5,7 @@
  */
 package pointergame;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -19,8 +20,8 @@ import java.util.HashSet;
 public class Box {    
     public static final int BOX_SIZE = 20;
     public static final String MIN_INDENT = "  ";
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
     
     private ArrayList<Box> pointedToBy = new ArrayList<Box>();
 
@@ -106,6 +107,14 @@ public class Box {
     public void showChain(String indent)
     {
         System.out.println(this.toString() + "     --- if you are seeing this I have not finished implementing this");
+    }
+    
+    //graphics
+    public void drawBox(Graphics g)
+    {
+        g.fillRect(x, y, BOX_SIZE, BOX_SIZE);
+        g.drawLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
+        g.drawLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
     }
     
 }
