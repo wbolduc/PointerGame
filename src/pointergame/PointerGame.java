@@ -5,9 +5,8 @@
  */
 package pointergame;
 
-import java.awt.Graphics;
+
 import java.util.ArrayList;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 /**
@@ -16,14 +15,30 @@ import javax.swing.JFrame;
  */
 
 public class PointerGame {
+        
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Mini Tennis");
+	PointerVisualizer pv = new PointerVisualizer();
+	frame.add(pv);
+	frame.setSize(300, 400);
+	frame.setVisible(true);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+        
+        
+        pv.addBox(new PointerBox(10,20));
+        pv.addBox(new ValueBox(50,50));
+        pv.repaint();
+        
+    }
 
-    private static void createGui()
-    {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(30, 30, 1000, 1000);
-        frame.getContentPane().add(new MyCanvas());
-        frame.setVisible(true);
+    //Util
+    public static String indentPad(int padSize) {
+        String indent = "";
+        for (int i = 0; i < padSize; i++) {
+            indent += " ";
+        }
+        return indent;
     }
     
     static void lineBreak()
@@ -31,9 +46,9 @@ public class PointerGame {
         System.out.println("----------------------------------------------------------");
     }
     
-    
-    public static void main(String[] args) {
-
+    //tests
+    public static void bigStructTest()
+    {
         //test printing
         //Franction Struct
         Element numerator = new Element("numerator", ValueBox.class);
@@ -67,23 +82,4 @@ public class PointerGame {
         temp.showChain();
         lineBreak();
     }
-
-    //Util
-    public static String indentPad(int padSize) {
-        String indent = "";
-        for (int i = 0; i < padSize; i++) {
-            indent += " ";
-        }
-        return indent;
-    }
 }   
-
-class MyCanvas extends JComponent
-{
-    @Override
-    public void paint(Graphics g)
-    {
-        g.drawRect(30, 30, 300, 300);
-    }
-    
-}
