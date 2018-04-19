@@ -15,26 +15,55 @@ import javax.swing.JFrame;
  */
 
 public class PointerGame {
-        
-    public static void main(String[] args) {
+    public static final int xSize = 1000;
+    public static final int ySize = 1000;
+    
+    public static void main(String[] args) throws InterruptedException{
         JFrame frame = new JFrame("PointerVisualizer");
 	PointerVisualizer pv = new PointerVisualizer();
 	frame.add(pv);
-	frame.setSize(1000, 1000);
+	frame.setSize(xSize, ySize);
 	frame.setVisible(true);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+	        
         
         //TODO: badBox should not be a singleton
-        PointerBox pb = new PointerBox(10,20);
-        ValueBox vb = new ValueBox(50,50);
+        PointerBox pb = new PointerBox(xSize/2 - Box.BOX_SIZE/2, ySize/2 - Box.BOX_SIZE/2);
+        ValueBox vb = new ValueBox(0,0);
         
         pb.setPointer(vb);
         
         pv.addBox(pb);
         pv.addBox(vb);
-        pv.repaint();
         
+        int stepTime = 1000;
+        while(true)
+        {
+            while(vb.getX() < xSize - Box.BOX_SIZE)
+            {
+                vb.setX(vb.getX()+50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() < ySize - Box.BOX_SIZE)
+            {
+                vb.setY(vb.getY()+50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getX() > 0)
+            {
+                vb.setX(vb.getX()-50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() > 0)
+            {
+                vb.setY(vb.getY()-50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+        }
     }
 
     //Util

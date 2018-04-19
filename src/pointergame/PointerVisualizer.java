@@ -22,13 +22,13 @@ public class PointerVisualizer extends JPanel{
     @Override
     public void paint(Graphics g)
     {
+        
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         for(Box b : boxes)
         {
-            System.out.println("boop");
             b.drawBox(g);
         }
     }

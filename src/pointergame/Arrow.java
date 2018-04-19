@@ -39,8 +39,7 @@ public class Arrow {
     
     public void drawArrow(Graphics g)
     {
-        int x1 = start.getX() + Box.BOX_SIZE/2;
-        int y1 = start.getY() + Box.BOX_SIZE/2;
+        Vector2D p1 = new Vector2D(start.getX() + Box.BOX_SIZE/2, start.getY() + Box.BOX_SIZE/2);
         
         if (end == null)
         {
@@ -48,11 +47,38 @@ public class Arrow {
         }
         else
         {
-            int x2 = end.getX() + Box.BOX_SIZE/2;
-            int y2 = end.getY() + Box.BOX_SIZE/2;
-        
-            g.drawLine(x1, y1, x2, y2);
-            end.drawBox(g);
+            Vector2D p2 = new Vector2D(end.getX() + Box.BOX_SIZE/2, end.getY() + Box.BOX_SIZE/2);
+            Line2D arrow = new Line2D(p1,p2);
+            double angle = arrow.atOrigin().angle();
+            
+            int endX = end.getX();
+            int endY = end.getY();
+            
+            
+            Line2D boxSide;
+            System.out.println("Angle: " + Double.toString(angle));
+            if (Math.PI * 7 / 4 <= angle)
+                boxSide = new Line2D(endX, endY, endX, endY + Box.BOX_SIZE); //hitting left side
+            else if (Math.PI * 5 /4 <= angle)
+                boxSide = new Line2D(endX, endY + Box.BOX_SIZE, endX + Box.BOX_SIZE, endY + Box.BOX_SIZE); //hitting bottom side
+            else if (Math.PI * 3 / 4 <= angle)
+                boxSide = new Line2D(endX + Box.BOX_SIZE, endY, endX + Box.BOX_SIZE, endY + Box.BOX_SIZE); //hitting right side
+            else if (Math.PI / 4 <= angle)
+                boxSide = new Line2D(endX, endY, endX + Box.BOX_SIZE, endY); //hitting top side
+            else
+                boxSide = new Line2D(endX, endY, endX, endY + Box.BOX_SIZE); //hitting left side
+            
+            boxSide.printLine();
+            Vector2D intersect = arrow.intersectionPoint(boxSide);
+
+            System.out.println(intersect.toString());
+            
+            arrow.setP2(intersect);
+            
+            //arrow.setP2(arrow.atOrigin().toUnit().scale(100).add(p1));
+            arrow.drawLine(g);
+            
+            //(new Line2D(p1,(new Line2D(p1,p2).intersectionPoint(new Line2D(end.getX(), end.getY(),end.getX()+Box.BOX_SIZE,end.getY()+Box.BOX_SIZE))))).drawLine(g);
         }
     }
    

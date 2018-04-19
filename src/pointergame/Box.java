@@ -18,7 +18,7 @@ import java.util.HashSet;
 
 
 public class Box {    
-    public static final int BOX_SIZE = 20;
+    public static final int BOX_SIZE = 100;
     public static final String MIN_INDENT = "  ";
     protected int x;
     protected int y;
