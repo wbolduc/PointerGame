@@ -29,37 +29,37 @@ public class PointerGame {
         
         //TODO: badBox should not be a singleton
         PointerBox pb = new PointerBox(xSize/2 - Box.BOX_SIZE/2, ySize/2 - Box.BOX_SIZE/2);
-        ValueBox vb = new ValueBox(0,0);
+        ValueBox vb = new ValueBox(600,200);
         
         pb.setPointer(vb);
         
         pv.addBox(pb);
         pv.addBox(vb);
         
-        int stepTime = 1000;
+        int stepTime = 16;
         while(true)
         {
             while(vb.getX() < xSize - Box.BOX_SIZE)
             {
-                vb.setX(vb.getX()+50);
+                vb.setX(vb.getX()+5);
                 Thread.sleep(stepTime);
                 pv.repaint();
             }
             while(vb.getY() < ySize - Box.BOX_SIZE)
             {
-                vb.setY(vb.getY()+50);
+                vb.setY(vb.getY()+5);
                 Thread.sleep(stepTime);
                 pv.repaint();
             }
             while(vb.getX() > 0)
             {
-                vb.setX(vb.getX()-50);
+                vb.setX(vb.getX()-5);
                 Thread.sleep(stepTime);
                 pv.repaint();
             }
             while(vb.getY() > 0)
             {
-                vb.setY(vb.getY()-50);
+                vb.setY(vb.getY()-5);
                 Thread.sleep(stepTime);
                 pv.repaint();
             }

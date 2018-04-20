@@ -5,6 +5,7 @@
  */
 package pointergame;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import static pointergame.Box.BOX_SIZE;
@@ -47,8 +48,10 @@ public class ValueBox extends Box {
         g.drawRect(x, y, BOX_SIZE, BOX_SIZE);
         if (uninitialized == true)
         {
+            g.setColor(Color.red);
             g.drawLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
             g.drawLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
+            g.setColor(Color.black);
         }
         else
         {
