@@ -17,25 +17,23 @@ public class BoxStruct extends Box{
     
     private int maxNameLength = 0;
     
-    BoxStruct(int x, int y, StructElement structDef)
-    {
-        super(x,y);
-        
+    BoxStruct(StructElement structDef)
+    {        
         this.structDef = structDef;
         
         //loops through the elements defined in structDef and creates them recursively in "actual memory"
         for(Element e : structDef.getStructElements())
         {   
             if (e instanceof StructElement)
-                elements.put(e.getName(), new BoxStruct(0,0,(StructElement)e));
+                elements.put(e.getName(), new BoxStruct((StructElement)e));
             else if (e instanceof ArrayElement)
-                elements.put(e.getName(), new BoxArray(0,0,(ArrayElement)e));
+                elements.put(e.getName(), new BoxArray((ArrayElement)e));
             else
             {
                 if (e.getElementType() == PointerBox.class)
-                    elements.put(e.getName(), new PointerBox(0,0));
+                    elements.put(e.getName(), new PointerBox());
                 else //valueBox
-                    elements.put(e.getName(), new ValueBox(0,0));
+                    elements.put(e.getName(), new ValueBox());
             }
             
             //gets the length of the longest element name (for use only for printing later)

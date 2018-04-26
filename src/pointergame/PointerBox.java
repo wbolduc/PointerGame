@@ -6,7 +6,6 @@
 package pointergame;
 
 import java.awt.Graphics;
-import static pointergame.Box.BOX_SIZE;
 
 /**
  *
@@ -14,11 +13,9 @@ import static pointergame.Box.BOX_SIZE;
  */
 public class PointerBox extends Box{
     private Box pointingTo = null;
-    private Arrow arrow = new Arrow(this, null);
     
-    PointerBox(int x, int y)
+    PointerBox()
     {
-        super(x,y);
         this.pointingTo = BadBox.getInstance();
     }
 
@@ -26,7 +23,6 @@ public class PointerBox extends Box{
     public void setPointer(Box dest)
     {
         pointingTo = dest;
-        arrow.setEnd(dest); //for graphics
         dest.addOrigin(this);
     }
     
@@ -49,12 +45,5 @@ public class PointerBox extends Box{
         {
             pointingTo.showChain();
         }
-    }
-    
-    //graphics
-    public void drawBox(Graphics g)
-    {
-        g.drawRect(x, y, BOX_SIZE, BOX_SIZE);
-        arrow.drawArrow(g);
     }
 }

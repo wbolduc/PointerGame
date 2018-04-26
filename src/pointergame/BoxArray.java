@@ -22,27 +22,25 @@ public class BoxArray extends Box{
     //used for graphics
     private Orientation orientation = Orientation.HORIZONTAL;
     
-    BoxArray(int x, int y, ArrayElement arrayDef)
+    BoxArray(ArrayElement arrayDef)
     {
-        super(x, y);
-
         boxType = arrayDef.getType();
         arraySize = arrayDef.getArraySize();
 
         if (boxType instanceof StructElement)
             for (int i = 0; i < arraySize; i++)
-                boxes.add(new BoxStruct(0, 0, (StructElement) boxType));
+                boxes.add(new BoxStruct((StructElement) boxType));
         else if (boxType instanceof ArrayElement)
             for (int i = 0; i < arraySize; i++)
-                boxes.add(new BoxArray(0, 0, (ArrayElement) boxType));
+                boxes.add(new BoxArray((ArrayElement) boxType));
         else
         {
             if (boxType.getElementType() == PointerBox.class)
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new PointerBox(0, 0));
+                    boxes.add(new PointerBox());
             else //valueBox
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new ValueBox(0, 0));
+                    boxes.add(new ValueBox());
         }
     }
     
@@ -121,12 +119,5 @@ public class BoxArray extends Box{
                 b.showChain(indent);
             }
         }
-    }
-    
-    
-    //Graphics
-    public void drawBox(Graphics g)
-    {
-        
     }
 }

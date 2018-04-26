@@ -18,34 +18,10 @@ import java.util.HashSet;
 
 
 public class Box {    
-    public static final int BOX_SIZE = 100;
     public static final String MIN_INDENT = "  ";
-    protected int x;
-    protected int y;
     
     private ArrayList<Box> pointedToBy = new ArrayList<Box>();
-
-    Box(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }        
-    
-    //Setters
-    public void setX(int x)
-    {
-        this.x = x;
-    }
-    public void setY(int y)
-    {
-        this.y = y;
-    }
-    public void setPos(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-    
+   
     //mutators
     public void addOrigin(Box origin)
     {
@@ -56,16 +32,7 @@ public class Box {
         pointedToBy.remove(origin);
     }
     
-    //Getters
-    public int getX()
-    {
-        return x;
-    }
-    public int getY()
-    {
-        return y;
-    }
-    public ArrayList<Box> getOrigins()
+    protected ArrayList<Box> getOrigins()
     {
         return pointedToBy;
     }
@@ -108,13 +75,4 @@ public class Box {
     {
         System.out.println(this.toString() + "     --- if you are seeing this I have not finished implementing this");
     }
-    
-    //graphics
-    public void drawBox(Graphics g)
-    {
-        g.fillRect(x, y, BOX_SIZE, BOX_SIZE);
-        g.drawLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
-        g.drawLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
-    }
-    
 }

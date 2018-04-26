@@ -5,27 +5,21 @@
  */
 package pointergame;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import static pointergame.Box.BOX_SIZE;
-
 /**
  *
  * @author wbolduc
  */
 public class ValueBox extends Box {
-    private char content;
-    private boolean uninitialized = true;
+    private char content;           //NOTE: should content be "Object content"?
+    private boolean uninitialized;
 
-    ValueBox(int x, int y, char value) {
-        super(x, y);
+    ValueBox(char value) {
         content = value;
         uninitialized = false;
     }
-    
-    ValueBox(int x, int y) {
-        super(x, y);
+    ValueBox()
+    {
+        uninitialized = true;
     }
     
     //Setters
@@ -43,20 +37,14 @@ public class ValueBox extends Box {
             System.out.println("ValueBox storing " + content);
     }
     
-    public void drawBox(Graphics g)
+    //getters
+    protected boolean isUninitialized()
     {
-        g.drawRect(x, y, BOX_SIZE, BOX_SIZE);
-        if (uninitialized == true)
-        {
-            g.setColor(Color.red);
-            g.drawLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
-            g.drawLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
-            g.setColor(Color.black);
-        }
-        else
-        {
-            g.setFont(new Font("Helvetica", Font.PLAIN, BOX_SIZE));
-            g.drawString(""+content, x, y + BOX_SIZE);
-        }
+        return uninitialized;
     }
+    protected char getContent()
+    {
+        return content;
+    }
+            
 }
