@@ -44,6 +44,7 @@ public class GPointerBox extends PointerBox{
             int endX = end.getX();
             int endY = end.getY();
             
+            
             Line2D boxSide;
             System.out.println("Angle: " + Double.toString(angle));
             if (Math.PI * 7 / 4 <= angle)
@@ -57,18 +58,10 @@ public class GPointerBox extends PointerBox{
             else
                 boxSide = new Line2D(endX, endY, endX, endY + Box.BOX_SIZE); //hitting left side
             
-            
-            
+            boxSide.printLine();
             Vector2D intersect = arrow.intersectionPoint(boxSide);
 
-            System.out.println("P1: " + p1.toString());
-            System.out.println("P2: " + p2.toString());
-            System.out.print("Arrow: ");
-            arrow.printLine();
-            System.out.print("Side: ");
-            boxSide.printLine();
-            System.out.println("Point: " + intersect.toString());
-            PointerGame.lineBreak();
+            System.out.println(intersect.toString());
             
             arrow.setP2(intersect);
             
