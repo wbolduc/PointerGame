@@ -6,7 +6,10 @@
 package pointergame;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 1385efa... Basic arrow being drawn correctly
 import java.awt.Font;
 import java.awt.Graphics;
 import static pointergame.Box.BOX_SIZE;
