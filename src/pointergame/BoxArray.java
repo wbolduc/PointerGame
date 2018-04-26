@@ -7,7 +7,6 @@ package pointergame;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import static pointergame.Box.BOX_SIZE;
 
 /**
  *
@@ -74,7 +73,7 @@ public class BoxArray extends Box{
     {
         //check for ranges
         if (!inRange(index))
-            return BadBox.getInstance();
+            return null;
         
         return boxes.get(index);
     }

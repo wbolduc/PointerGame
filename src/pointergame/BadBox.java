@@ -11,21 +11,6 @@ package pointergame;
  */
 //represents an uninitialized pointer
 public class BadBox extends Box{
-    private static BadBox instance = null;
-    
-    private BadBox()
-    {
-        super(0,0);
-    }
-    
-    public static BadBox getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new BadBox();
-        }
-        return instance;
-    }
     
     public void showChain(String indent)
     {

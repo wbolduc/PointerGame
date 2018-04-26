@@ -16,7 +16,7 @@ public class PointerBox extends Box{
     
     PointerBox()
     {
-        this.pointingTo = BadBox.getInstance();
+        this.pointingTo = null;
     }
 
     //Mutators

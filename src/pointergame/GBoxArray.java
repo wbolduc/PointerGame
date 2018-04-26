@@ -9,6 +9,15 @@ package pointergame;
  *
  * @author wbolduc
  */
-public class GBoxArray {
+public class GBoxArray extends BoxArray{
+    private int x;
+    private int y;
+    
+    GBoxArray(int x, int y, ArrayElement arrayDef)
+    {
+        super(arrayDef);
+        this.x = x;
+        this.y = y;
+    }
     
 }
