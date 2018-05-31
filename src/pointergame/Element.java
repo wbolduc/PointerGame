@@ -6,12 +6,13 @@
 package pointergame;
 
 /**
- *  Elements are used to describe the structure of structs or arrays in an unchanging manner
+ * Elements are used to describe the structure of structs or arrays
+ * They do not actually store any of the data
  * @author wbolduc
  */
 
 public class Element {
-    private Class elementType;
+    private final Class elementType;
     private String name;
     
     Element(Class elementType)
@@ -43,5 +44,11 @@ public class Element {
     {
         System.out.println(elementType.getName().substring("pointergame.".length()));
     }
-    
+    public Tuple2 get2DSize()
+    {
+        if (this instanceof StructElement)
+        {
+            System.out.println("I'm a struct");
+        }
+    }
 }

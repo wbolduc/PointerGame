@@ -5,8 +5,8 @@
  */
 package pointergame;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 import static pointergame.Box.BOX_SIZE;
 
 /**
@@ -15,7 +15,7 @@ import static pointergame.Box.BOX_SIZE;
  */
 
 public class BoxArray extends Box{
-    private ArrayList<Box> boxes = new ArrayList<Box>();;
+    private ArrayList<Box> boxes = new ArrayList<Box>();
     private int arraySize;
     private Element boxType;
     
@@ -25,24 +25,37 @@ public class BoxArray extends Box{
     BoxArray(int x, int y, ArrayElement arrayDef)
     {
         super(x, y);
-
+        int size;
+        
         boxType = arrayDef.getType();
         arraySize = arrayDef.getArraySize();
 
-        if (boxType instanceof StructElement)
-            for (int i = 0; i < arraySize; i++)
-                boxes.add(new BoxStruct(0, 0, (StructElement) boxType));
-        else if (boxType instanceof ArrayElement)
-            for (int i = 0; i < arraySize; i++)
-                boxes.add(new BoxArray(0, 0, (ArrayElement) boxType));
-        else
+        if (orientation == Orientation.VERTICAL)
         {
-            if (boxType.getElementType() == PointerBox.class)
+            if (boxType instanceof StructElement)
+            {
+                ((StructElement)boxType).get2DSize();
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new PointerBox(0, 0));
+                    boxes.add(new BoxStruct(x, y + i*size, (StructElement) boxType));
+            }
+            else if (boxType instanceof ArrayElement)
+            {
+                ((ArrayElement)boxType).get2DSize();
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new BoxArray(x, y + i*size, (ArrayElement) boxType));
+            }
+            else if (boxType.getElementType() == PointerBox.class)
+            {
+                size = PointerBox.BOX_SIZE;
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new PointerBox(x, y + i*size));
+            }
             else //valueBox
+            {
+                size = ValueBox.BOX_SIZE;
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new ValueBox(0, 0));
+                    boxes.add(new ValueBox(x, y + i*size));
+            }
         }
     }
     
@@ -125,8 +138,7 @@ public class BoxArray extends Box{
     
     
     //Graphics
-    public void drawBox(Graphics g)
+    public void drawBox(GraphicsContext g)
     {
-        
     }
 }

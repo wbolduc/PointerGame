@@ -45,4 +45,8 @@ public class StructElement extends Element
             e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2));
         }
     }
+    public void get2Dsize()
+    {
+        System.out.println("I am here");
+    }
 }

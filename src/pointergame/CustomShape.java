@@ -5,89 +5,55 @@
  */
 package pointergame;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
  * @author wbolduc
  */
-public class Arrow {
-    private Box start;
-    private Box end;
+public class CustomShape{
     
-    Arrow(Box start, Box end)
-    {
-        this.start = start;
-        this.end = end;
-    }
+    private static final double defaultArrowHeadWidth = 10;
+    private static final double defaultArrowHeadLength = 15;
+    private static final Color defaultColor = Color.BLUE;
 
-    public Box getStart() {
-        return start;
-    }
-
-    public void setStart(Box start) {
-        this.start = start;
-    }
-
-    public Box getEnd() {
-        return end;
-    }
-
-    public void setEnd(Box end) {
-        this.end = end;
-    }
     
-    public void drawArrow(Graphics g)
+    public static void arrow(GraphicsContext gc, double x1, double y1, double x2, double y2, double arrowHeadWidth, double arrowHeadLength, Color color)
     {
-        Vector2D p1 = new Vector2D(start.getX() + Box.BOX_SIZE/2, start.getY() + Box.BOX_SIZE/2);
+        gc.setStroke(color);
+        gc.setFill(color);
         
-        if (end == null)
-        {
-            return; // TODO: ACTUALLY DRAW NULL
-        }
-        else
-        {
-            Vector2D p2 = new Vector2D(end.getX() + Box.BOX_SIZE/2, end.getY() + Box.BOX_SIZE/2);
-            Line2D arrow = new Line2D(p1,p2);
-            double angle = arrow.atOrigin().angle();
-            
-            int endX = end.getX();
-            int endY = end.getY();
-            
-            Line2D boxSide;
-            System.out.println("Angle: " + Double.toString(angle));
-            if (Math.PI * 7 / 4 <= angle)
-                boxSide = new Line2D(endX, endY, endX, endY + Box.BOX_SIZE); //hitting left side
-            else if (Math.PI * 5 /4 <= angle)
-                boxSide = new Line2D(endX, endY + Box.BOX_SIZE, endX + Box.BOX_SIZE, endY + Box.BOX_SIZE); //hitting bottom side
-            else if (Math.PI * 3 / 4 <= angle)
-                boxSide = new Line2D(endX + Box.BOX_SIZE, endY, endX + Box.BOX_SIZE, endY + Box.BOX_SIZE); //hitting right side
-            else if (Math.PI / 4 <= angle)
-                boxSide = new Line2D(endX, endY, endX + Box.BOX_SIZE, endY); //hitting top side
-            else
-                boxSide = new Line2D(endX, endY, endX, endY + Box.BOX_SIZE); //hitting left side
-            
-            
-            
-            Vector2D intersect = arrow.intersectionPoint(boxSide);
+        //line part
+        gc.beginPath();
+        gc.moveTo(x1, y1);
+        gc.lineTo(x2, y2);
+        
+        //find unit vectors
+        double magnitude = Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+        double unitx = (x2 - x1) / magnitude;
+        double unity = (y2 - y1) / magnitude;
+        
+        double unitx90deg = -unity;
+        double unity90deg = unitx;
 
-            System.out.println("P1: " + p1.toString());
-            System.out.println("P2: " + p2.toString());
-            System.out.print("Arrow: ");
-            arrow.printLine();
-            System.out.print("Side: ");
-            boxSide.printLine();
-            System.out.println("Point: " + intersect.toString());
-            PointerGame.lineBreak();
-            
-            arrow.setP2(intersect);
-            
-            //arrow.setP2(arrow.atOrigin().toUnit().scale(100).add(p1));
-            arrow.drawLine(g);
-            
-            //(new Line2D(p1,(new Line2D(p1,p2).intersectionPoint(new Line2D(end.getX(), end.getY(),end.getX()+Box.BOX_SIZE,end.getY()+Box.BOX_SIZE))))).drawLine(g);
-        }
+        //arrowhead
+        double p1x = x2 - unitx*arrowHeadLength + unitx90deg*arrowHeadWidth;
+        double p1y = y2 - unity*arrowHeadLength + unity90deg*arrowHeadWidth;
+
+        double p2x = x2 - unitx*arrowHeadLength - unitx90deg*arrowHeadWidth;
+        double p2y = y2 - unity*arrowHeadLength - unity90deg*arrowHeadWidth;
+        
+        gc.lineTo(p1x, p1y);
+        gc.lineTo(p2x, p2y);
+        gc.lineTo(x2, y2);
+        gc.closePath();
+        gc.fill();
+        gc.stroke();
     }
-   
+    
+    public static void arrow(GraphicsContext gc, double x1, double y1, double x2, double y2)
+    {
+        arrow(gc, x1,y1,x2,y2,defaultArrowHeadWidth, defaultArrowHeadLength, defaultColor);
+    }
 }

@@ -7,65 +7,63 @@ package pointergame;
 
 
 import java.util.ArrayList;
-import javax.swing.JFrame;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
 
 /**
  *
  * @author wbolduc
  */
 
-public class PointerGame {
+public class PointerGame extends Application{
     public static final int xSize = 1000;
     public static final int ySize = 1000;
     
-    public static void main(String[] args) throws InterruptedException{
-        JFrame frame = new JFrame("PointerVisualizer");
-	PointerVisualizer pv = new PointerVisualizer();
-	frame.add(pv);
-	frame.setSize(xSize, ySize);
-	frame.setVisible(true);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        
+    public static final ArrayList<Box> boxes = new ArrayList<Box>();
+    
+    public static void main(String[] args){
+        Element e = new Element(PointerBox.class);
+        ArrayList<Element> ae = new ArrayList<Element>();
+        ae.add(e);
+        new StructElement("test", ae).get2DSize();
         
-        //TODO: badBox should not be a singleton
-        PointerBox pb = new PointerBox(xSize/2 - Box.BOX_SIZE/2, ySize/2 - Box.BOX_SIZE/2);
-        ValueBox vb = new ValueBox(600,200);
-        
-        pb.setPointer(vb);
-        
-        pv.addBox(pb);
-        pv.addBox(vb);
-        
-        int stepTime = 16;
-        while(true)
-        {
-            while(vb.getX() < xSize - Box.BOX_SIZE)
-            {
-                vb.setX(vb.getX()+5);
-                Thread.sleep(stepTime);
-                pv.repaint();
-            }
-            while(vb.getY() < ySize - Box.BOX_SIZE)
-            {
-                vb.setY(vb.getY()+5);
-                Thread.sleep(stepTime);
-                pv.repaint();
-            }
-            while(vb.getX() > 0)
-            {
-                vb.setX(vb.getX()-5);
-                Thread.sleep(stepTime);
-                pv.repaint();
-            }
-            while(vb.getY() > 0)
-            {
-                vb.setY(vb.getY()-5);
-                Thread.sleep(stepTime);
-                pv.repaint();
-            }
-        }
-    }
 
+        ValueBox vb1 = new ValueBox(20, 20);
+        boxes.add(vb1);
+        boxes.add(new ValueBox(200, 100, '2'));
+        
+        boxes.add(new PointerBox(20, 200));
+        boxes.add(new PointerBox(200, 320).setPointer(vb1));
+        boxes.add(new PointerBox(400, 20).setPointer(null));
+        
+        launch(args);
+    }
+    
+    public void start(Stage theStage) 
+    {
+        theStage.setTitle( "Pointer Visualizer" );
+
+        Group root = new Group();
+        Scene theScene = new Scene( root );
+        theStage.setScene( theScene );
+
+        Canvas canvas = new Canvas( xSize, ySize );
+        root.getChildren().add( canvas );
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        for (Box b : boxes)
+        {
+            b.drawBox(gc);
+        }
+
+        theStage.show();
+    }
+    
     //Util
     public static String indentPad(int padSize) {
         String indent = "";

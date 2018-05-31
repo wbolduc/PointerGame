@@ -10,14 +10,19 @@ package pointergame;
  * @author wbolduc
  */
 public class ArrayElement extends Element{
-    private Element type;
-    private int arraySize;
+    private final Element type;
+    private final int arraySize;
+    private final Tuple2 size;
+
     
     ArrayElement(Element type, int arraySize)
     {
         super(BoxArray.class);
         this.type = type;
         this.arraySize = arraySize;
+        
+        Tuple2 elementSize = type.get2DSize();
+        size = new Tuple2(elementSize.x, elementSize.y * arraySize);
     }
     ArrayElement(String name, Element type, int arraySize)
     {
@@ -41,5 +46,10 @@ public class ArrayElement extends Element{
         String output = "Array of " + Integer.toString(arraySize) + " ";
         System.out.print(output);
         type.printStructure(indent + PointerGame.indentPad(output.length()));
+    }
+    
+    public Tuple2 get2dSize()
+    {
+        return size;
     }
 }

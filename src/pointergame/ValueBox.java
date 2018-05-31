@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package pointergame;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import javafx.geometry.VPos;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import static pointergame.Box.BOX_SIZE;
 
 /**
@@ -43,20 +45,23 @@ public class ValueBox extends Box {
             System.out.println("ValueBox storing " + content);
     }
     
-    public void drawBox(Graphics g)
+    public void drawBox(GraphicsContext gc)
     {
-        g.drawRect(x, y, BOX_SIZE, BOX_SIZE);
+        gc.setStroke(Color.BLACK);
+        gc.strokeRect(x, y, BOX_SIZE, BOX_SIZE);
         if (uninitialized == true)
         {
-            g.setColor(Color.red);
-            g.drawLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
-            g.drawLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
-            g.setColor(Color.black);
+            gc.setStroke(Color.RED);
+            gc.strokeLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
+            gc.strokeLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
         }
         else
         {
-            g.setFont(new Font("Helvetica", Font.PLAIN, BOX_SIZE));
-            g.drawString(""+content, x, y + BOX_SIZE);
+            Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
+            gc.setFont( theFont );
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.setTextBaseline(VPos.CENTER);
+            gc.strokeText(""+content, x+BOX_SIZE/2, y+BOX_SIZE/2, BOX_SIZE);
         }
     }
 }

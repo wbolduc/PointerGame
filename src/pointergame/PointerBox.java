@@ -6,6 +6,8 @@
 package pointergame;
 
 import java.awt.Graphics;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import static pointergame.Box.BOX_SIZE;
 
 /**
@@ -14,7 +16,6 @@ import static pointergame.Box.BOX_SIZE;
  */
 public class PointerBox extends Box{
     private Box pointingTo = null;
-    private Arrow arrow = new Arrow(this, null);
     
     PointerBox(int x, int y)
     {
@@ -23,11 +24,19 @@ public class PointerBox extends Box{
     }
 
     //Mutators
-    public void setPointer(Box dest)
+    public PointerBox setPointer(Box dest)
     {
+        if (pointingTo != null)
+        {
+            pointingTo.removeOrigin(this);
+        }
+        
         pointingTo = dest;
-        arrow.setEnd(dest); //for graphics
-        dest.addOrigin(this);
+        
+        if (dest != null)
+            dest.addOrigin(this);
+        
+        return this;
     }
     
     //Getters
@@ -52,9 +61,26 @@ public class PointerBox extends Box{
     }
     
     //graphics
-    public void drawBox(Graphics g)
+    public void drawBox(GraphicsContext gc)
     {
-        g.drawRect(x, y, BOX_SIZE, BOX_SIZE);
-        arrow.drawArrow(g);
+        gc.setStroke(Color.BLACK);
+        gc.strokeRect(x, y, BOX_SIZE, BOX_SIZE);
+        
+        if (pointingTo == null)
+        {
+            gc.setStroke(Color.BLUE);
+            gc.strokeOval(x, y, BOX_SIZE, BOX_SIZE);
+        }
+        else if (pointingTo instanceof BadBox)
+        {
+            System.out.println("Gotta add bad box pointers");
+        }
+        else
+        {
+            
+            CustomShape.arrow(gc, x+BOX_SIZE/2, y+BOX_SIZE/2, pointingTo.x+BOX_SIZE/2, pointingTo.y+BOX_SIZE/2, 10, 15, Color.BLUE);
+            
+            //gc.strokeLine(x+BOX_SIZE/2, y+BOX_SIZE/2, pointingTo.x+BOX_SIZE/2, pointingTo.y+BOX_SIZE/2);
+        }
     }
 }
