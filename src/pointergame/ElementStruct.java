@@ -15,18 +15,33 @@ public class ElementStruct extends Element
 {
     private final Element[] structElements;
     
-    ElementStruct(String name, Element[] structElements)
+    ElementStruct(String name, Orientation orientation, Element[] structElements)
     {
-        super(BoxStruct.class, name);
+        super(BoxStruct.class, orientation, name);
         
         size = new Size2D(0,0);
-        for (Element e: structElements)
+        if (orientation == Orientation.HORIZONTAL)
         {
-            if (e.size.y > size.y)
+            for (Element e: structElements)
             {
-                size.y = e.size.y;
+                if (e.size.y > size.y)
+                {
+                    size.y = e.size.y;
+                }
+                size.x += e.size.x;
             }
-            size.x += e.size.x;
+        }
+        else
+        {
+            System.out.print("RORORO");
+            for (Element e: structElements)
+            {
+                if (e.size.x > size.x)
+                {
+                    size.x = e.size.x;
+                }
+                size.y += e.size.y;
+            }
         }
         this.structElements = structElements;
     }

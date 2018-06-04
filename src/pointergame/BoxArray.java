@@ -20,7 +20,7 @@ public class BoxArray extends Box{
     private Element arrayElementType;
     private ElementArray arrayDef;
     //used for graphics
-    private Orientation orientation = Orientation.VERTICAL;
+    private Orientation orientation;
     
     BoxArray(int x, int y, ElementArray arrayDef)
     {
@@ -29,7 +29,8 @@ public class BoxArray extends Box{
         
         arrayElementType = arrayDef.getIndexType();
         arraySize = arrayDef.getArraySize();
-
+        orientation = arrayDef.orientation; //TODO: should probably just use the ElementArray
+        
         Size2D elementSize = arrayElementType.get2DSize();
         Class type = arrayElementType.getType();
         
@@ -56,7 +57,29 @@ public class BoxArray extends Box{
                     boxes.add(new ValueBox(x, y + i*elementSize.y));
             }
         }
-        //TODO DO ORIENTATION SWITCHING
+        else //orientation horizontal
+        {
+            if (type == ElementStruct.class)
+            {
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new BoxStruct(x + i*elementSize.x, y, (ElementStruct) arrayElementType));
+            }
+            else if (type == ElementArray.class)
+            {
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new BoxArray(x + i*elementSize.x, y, (ElementArray) arrayElementType));
+            }
+            else if (type == PointerBox.class)
+            {
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new PointerBox(x + i*elementSize.x, y));
+            }
+            else //valueBox
+            {
+                for (int i = 0; i < arraySize; i++)
+                    boxes.add(new ValueBox(x + i*elementSize.x, y));
+            }
+        }
     }
     
     //Setters

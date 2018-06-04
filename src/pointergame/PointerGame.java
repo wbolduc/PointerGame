@@ -28,30 +28,26 @@ public class PointerGame extends Application{
     
     public static void main(String[] args){
         //test drawing array
-        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new ElementArray("test", new Element(ValueBox.class, BOX_SIZE, BOX_SIZE), 5)));
-        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new ElementArray("test", new Element(PointerBox.class, BOX_SIZE, BOX_SIZE), 6)));
+        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new ElementArray("test", Orientation.VERTICAL, 5, new Element(ValueBox.class))));
+        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new ElementArray("test", Orientation.VERTICAL, 5, new Element(PointerBox.class))));
 
         //test drawing struct
         //struct def
-        ElementStruct node = new ElementStruct("Node",new Element[]{
-        new Element(ValueBox.class, "data", BOX_SIZE, BOX_SIZE),
-        new Element(PointerBox.class, "next", BOX_SIZE, BOX_SIZE)
+        ElementStruct node = new ElementStruct("Node", Orientation.VERTICAL, new Element[]{
+        new Element(ValueBox.class, "data"),
+        new Element(PointerBox.class, "next")
         });
-        
         boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, node));
 
+        
+        
+        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), new ElementArray("test", Orientation.HORIZONTAL, 5, new Element(ValueBox.class))));
+        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), new ElementArray("test", Orientation.HORIZONTAL, 5, new Element(PointerBox.class))));
 
-        //boxes.add(new BoxArray(20+2*(BOX_SIZE + 20),20, new ElementArray("test", new Element(PointerBox.class, BOX_SIZE, BOX_SIZE), 6)));
-        
-        /*
-        ValueBox vb1 = new ValueBox(20, 20);
-        boxes.add(vb1);
-        boxes.add(new ValueBox(200, 100, '2'));
-        
-        boxes.add(new PointerBox(20, 200));
-        boxes.add(new PointerBox(200, 320).setPointer(vb1));
-        boxes.add(new PointerBox(400, 20).setPointer(null));
-        */
+        //test drawing struct
+        //struct def
+        node.setOrientation(Orientation.HORIZONTAL);
+        boxes.add(new BoxStruct(400, 20+2*(BOX_SIZE + 20), node));
         launch(args);
     }
     

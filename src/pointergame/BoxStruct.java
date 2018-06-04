@@ -26,12 +26,12 @@ public class BoxStruct extends Box{
         super(x,y);
         
         this.structDef = structDef;
+        orientation = structDef.orientation;
         
+        int offset = 0;
         if (orientation == Orientation.HORIZONTAL)
         {
             //loops through the elements defined in structDef and creates them recursively in "actual memory"
-            int offset = 0;
-            
             for(Element e : structDef.getStructElements())
             {   
                 Class type = e.getType();
@@ -45,11 +45,25 @@ public class BoxStruct extends Box{
                     elements.put(e.getName(), new ValueBox(x+offset,y));
                 
                 offset += e.get2DSize().x;
-           
-            //gets the length of the longest element name (for use only for printing later)
-            int len = e.getName().length();
-            if (len > maxNameLength)
-                maxNameLength = len;        
+            }
+        }
+        else //Vertical
+        {
+            System.out.println("Vert");
+            //loops through the elements defined in structDef and creates them recursively in "actual memory"   
+            for(Element e : structDef.getStructElements())
+            {   
+                Class type = e.getType();
+                if (type == ElementStruct.class)
+                    elements.put(e.getName(), new BoxStruct(x,y+offset,(ElementStruct)e));
+                else if (type == ElementArray.class)
+                    elements.put(e.getName(), new BoxArray(x,y+offset,(ElementArray)e));
+                else if (type == PointerBox.class)
+                    elements.put(e.getName(), new PointerBox(x,y+offset));
+                else //valueBox
+                    elements.put(e.getName(), new ValueBox(x,y+offset));
+                
+                offset += e.get2DSize().y;
             }
         }
     }

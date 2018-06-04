@@ -13,15 +13,26 @@ public class ElementArray extends Element{
     private final Element indexType;
     private final int arraySize;
     
-    ElementArray(String name, Element type, int arraySize)
+    ElementArray(String name, Orientation orientation, int arraySize, Element type)
     {
-        super(BoxArray.class, name, type.get2DSize().x * arraySize, type.get2DSize().y);
+        super(BoxArray.class, orientation, name);
+        if (orientation == Orientation.VERTICAL)
+        {
+            System.out.print("vert");
+            size = new Size2D(type.get2DSize().x, type.get2DSize().y * arraySize);            
+
+        }
+        else
+        {
+            size = new Size2D(type.get2DSize().x * arraySize, type.get2DSize().y);            
+        }
+        
         this.indexType = type;
         this.arraySize = arraySize;
     }
-    ElementArray(Element type, int arraySize)
+    ElementArray(Orientation orientation, int arraySize, Element type)
     {
-        this(null, type, arraySize);
+        this(null, orientation, arraySize, type);
     }
 
     public int getArraySize()
