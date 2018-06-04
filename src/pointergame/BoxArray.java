@@ -7,7 +7,7 @@ package pointergame;
 
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
-import static pointergame.Box.BOX_SIZE;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -17,46 +17,46 @@ import static pointergame.Box.BOX_SIZE;
 public class BoxArray extends Box{
     private ArrayList<Box> boxes = new ArrayList<Box>();
     private int arraySize;
-    private Element boxType;
-    
+    private Element arrayElementType;
+    private ElementArray arrayDef;
     //used for graphics
-    private Orientation orientation = Orientation.HORIZONTAL;
+    private Orientation orientation = Orientation.VERTICAL;
     
-    BoxArray(int x, int y, ArrayElement arrayDef)
+    BoxArray(int x, int y, ElementArray arrayDef)
     {
         super(x, y);
-        int size;
+        this. arrayDef = arrayDef;
         
-        boxType = arrayDef.getType();
+        arrayElementType = arrayDef.getIndexType();
         arraySize = arrayDef.getArraySize();
 
+        Size2D elementSize = arrayElementType.get2DSize();
+        Class type = arrayElementType.getType();
+        
         if (orientation == Orientation.VERTICAL)
         {
-            if (boxType instanceof StructElement)
+            if (type == ElementStruct.class)
             {
-                ((StructElement)boxType).get2DSize();
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxStruct(x, y + i*size, (StructElement) boxType));
+                    boxes.add(new BoxStruct(x, y + i*elementSize.y, (ElementStruct) arrayElementType));
             }
-            else if (boxType instanceof ArrayElement)
+            else if (type == ElementArray.class)
             {
-                ((ArrayElement)boxType).get2DSize();
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxArray(x, y + i*size, (ArrayElement) boxType));
+                    boxes.add(new BoxArray(x, y + i*elementSize.y, (ElementArray) arrayElementType));
             }
-            else if (boxType.getElementType() == PointerBox.class)
+            else if (type == PointerBox.class)
             {
-                size = PointerBox.BOX_SIZE;
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new PointerBox(x, y + i*size));
+                    boxes.add(new PointerBox(x, y + i*elementSize.y));
             }
             else //valueBox
             {
-                size = ValueBox.BOX_SIZE;
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new ValueBox(x, y + i*size));
+                    boxes.add(new ValueBox(x, y + i*elementSize.y));
             }
         }
+        //TODO DO ORIENTATION SWITCHING
     }
     
     //Setters
@@ -75,7 +75,7 @@ public class BoxArray extends Box{
         //check for matching type
         
         //TODO: FIX THIS
-        /*if (box.getClass() != boxType)
+        /*if (box.getClass() != arrayElementType)
         {
             System.err.println("Wrong box type cannot store");
             return;
@@ -96,7 +96,7 @@ public class BoxArray extends Box{
     
     public Element getBoxType()
     {
-        return boxType;
+        return arrayElementType;
     }
     
     //Util    
@@ -138,7 +138,15 @@ public class BoxArray extends Box{
     
     
     //Graphics
-    public void drawBox(GraphicsContext g)
+    @Override
+    public void drawBox(GraphicsContext gc)
     {
+        gc.setStroke(Color.GREEN);
+        gc.strokeRect(x-2, y-2, arrayDef.size.x+4, arrayDef.size.y+4);
+        System.out.println(boxes.size());
+        for (Box b : boxes)
+        {
+            b.drawBox(gc);
+        }
     }
 }

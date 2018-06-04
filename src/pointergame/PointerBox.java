@@ -5,7 +5,6 @@
  */
 package pointergame;
 
-import java.awt.Graphics;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import static pointergame.Box.BOX_SIZE;

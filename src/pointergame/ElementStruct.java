@@ -11,24 +11,27 @@ import java.util.ArrayList;
  *
  * @author wbolduc
  */
-public class StructElement extends Element
+public class ElementStruct extends Element
 {
-    private final ArrayList<Element> structElements;
-    private final String name;
+    private final Element[] structElements;
     
-    StructElement(String name, ArrayList<Element> structElements)
+    ElementStruct(String name, Element[] structElements)
     {
-        super(BoxStruct.class);
-        this.name = name;
+        super(BoxStruct.class, name);
+        
+        size = new Size2D(0,0);
+        for (Element e: structElements)
+        {
+            if (e.size.y > size.y)
+            {
+                size.y = e.size.y;
+            }
+            size.x += e.size.x;
+        }
         this.structElements = structElements;
     }
-
-    public String getName()
-    {
-        return name;
-    }
     
-    public ArrayList<Element> getStructElements()
+    public Element[] getStructElements()
     {
         return structElements;
     }
@@ -42,7 +45,7 @@ public class StructElement extends Element
         {
             System.out.print(indent);
             System.out.print(e.getName() + ": ");
-            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2));
+//            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2));
         }
     }
     public void get2Dsize()

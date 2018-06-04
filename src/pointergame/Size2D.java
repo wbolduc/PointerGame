@@ -9,12 +9,19 @@ package pointergame;
  *
  * @author wbolduc
  */
-public class Tuple2<X,Y>{
-    public final X x;
-    public final Y y;
-    public Tuple2(X x, Y y)
+public class Size2D{
+    public int x;
+    public int y;
+    public Size2D(int x, int y)
     {
         this.x = x;
         this.y = y;
+    }
+    
+    public Size2D incrementBy(Size2D increment)
+    {
+        x += increment.x;
+        y += increment.y;
+        return this;
     }
 }

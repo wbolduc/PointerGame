@@ -7,41 +7,50 @@ package pointergame;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 /**
  *
  * @author wbolduc
  */
 public class BoxStruct extends Box{
-    private StructElement structDef;
+    private ElementStruct structDef;
     private HashMap<String,Box> elements = new HashMap<String,Box>();
+    
+    private Orientation orientation = Orientation.HORIZONTAL;
     
     private int maxNameLength = 0;
     
-    BoxStruct(int x, int y, StructElement structDef)
+    BoxStruct(int x, int y, ElementStruct structDef)
     {
         super(x,y);
         
         this.structDef = structDef;
         
-        //loops through the elements defined in structDef and creates them recursively in "actual memory"
-        for(Element e : structDef.getStructElements())
-        {   
-            if (e instanceof StructElement)
-                elements.put(e.getName(), new BoxStruct(0,0,(StructElement)e));
-            else if (e instanceof ArrayElement)
-                elements.put(e.getName(), new BoxArray(0,0,(ArrayElement)e));
-            else
-            {
-                if (e.getElementType() == PointerBox.class)
-                    elements.put(e.getName(), new PointerBox(0,0));
-                else //valueBox
-                    elements.put(e.getName(), new ValueBox(0,0));
-            }
+        if (orientation == Orientation.HORIZONTAL)
+        {
+            //loops through the elements defined in structDef and creates them recursively in "actual memory"
+            int offset = 0;
             
+            for(Element e : structDef.getStructElements())
+            {   
+                Class type = e.getType();
+                if (type == ElementStruct.class)
+                    elements.put(e.getName(), new BoxStruct(x+offset,y,(ElementStruct)e));
+                else if (type == ElementArray.class)
+                    elements.put(e.getName(), new BoxArray(x+offset,y,(ElementArray)e));
+                else if (type == PointerBox.class)
+                    elements.put(e.getName(), new PointerBox(x+offset,y));
+                else //valueBox
+                    elements.put(e.getName(), new ValueBox(x+offset,y));
+                
+                offset += e.get2DSize().x;
+           
             //gets the length of the longest element name (for use only for printing later)
             int len = e.getName().length();
             if (len > maxNameLength)
                 maxNameLength = len;        
+            }
         }
     }
     
@@ -68,4 +77,17 @@ public class BoxStruct extends Box{
                 ((BoxArray)content).showChain(indent + PointerGame.indentPad(name.length()));
         }
     }   
+    
+    //graphics
+    @Override
+    public void drawBox(GraphicsContext gc)
+    {
+        gc.setStroke(Color.DARKORANGE);
+        gc.strokeRect(x-2, y-2, structDef.size.x+4, structDef.size.y+4);
+        for (Box b : elements.values())
+        {
+            b.drawBox(gc);
+        }
+    }
+    
 }

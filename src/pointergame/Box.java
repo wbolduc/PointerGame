@@ -112,8 +112,8 @@ public class Box {
     //graphics
     public void drawBox(GraphicsContext gc)
     {
-        gc.rect(x, y, BOX_SIZE, BOX_SIZE);
-        gc.setFill(Color.RED);
+        gc.setStroke(Color.BLUEVIOLET);
+        gc.strokeRect(x, y, BOX_SIZE, BOX_SIZE);
         gc.strokeLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
         gc.strokeLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
         gc.setFill(Color.BLACK);

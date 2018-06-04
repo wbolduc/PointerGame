@@ -12,43 +12,46 @@ package pointergame;
  */
 
 public class Element {
-    private final Class elementType;
-    private String name;
+    protected String name = null;
+    protected Size2D size;
+    private Class type;
     
-    Element(Class elementType)
+    protected Element(Class type)
     {
-        this.elementType = elementType;
+        this.type = type;
     }
-    Element(String name, Class elementType)
+    
+    protected Element(Class type, String name)
     {
+        this(type);
         this.name = name;
-        this.elementType = elementType;
     }
+
+    protected Element(Class type, int xSize, int ySize)
+    {
+        this(type);
+        size = new Size2D(xSize, ySize);
+    }
+    
+    protected Element(Class type, String name, int xSize, int ySize)
+    {
+        this(type, name);
+        size = new Size2D(xSize, ySize);
+    }
+
     
     public String getName()
     {
         return name;
     }
     
-    public Class getElementType()
+    public Class getType()
     {
-        return elementType;
+        return type;
     }
     
-    public void printStructure()
+    public Size2D get2DSize()
     {
-        this.printStructure("");
-    }
-    
-    public void printStructure(String indent)
-    {
-        System.out.println(elementType.getName().substring("pointergame.".length()));
-    }
-    public Tuple2 get2DSize()
-    {
-        if (this instanceof StructElement)
-        {
-            System.out.println("I'm a struct");
-        }
+        return size;
     }
 }
