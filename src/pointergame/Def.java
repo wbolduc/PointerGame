@@ -13,42 +13,42 @@ import static pointergame.Box.BOX_SIZE;
  * @author wbolduc
  */
 
-public class Element {
+public class Def {
     protected String name = null;
     protected Size2D size = new Size2D(BOX_SIZE, BOX_SIZE);
     private Class type;
     protected Orientation orientation = Orientation.HORIZONTAL;
 
-    protected Element(Class type)
+    protected Def(Class type)
     {
         this.type = type;
     }    
     
-    protected Element(Class type, String name)
+    protected Def(Class type, String name)
     {
         this(type);
         this.name = name;
     }
     
-    protected Element(Class type, Orientation orientation)
+    protected Def(Class type, Orientation orientation)
     {
         this(type);
         this.orientation = orientation;
     }
     
-    protected Element(Class type, Orientation orientation, String name)
+    protected Def(Class type, Orientation orientation, String name)
     {
         this(type,orientation);
         this.name = name;
     }
 
-    protected Element(Class type, Orientation orientation, int xSize, int ySize)
+    protected Def(Class type, Orientation orientation, int xSize, int ySize)
     {
         this(type, orientation);
         size = new Size2D(xSize, ySize);
     }
     
-    protected Element(Class type, Orientation orientation, String name, int xSize, int ySize)
+    protected Def(Class type, Orientation orientation, String name, int xSize, int ySize)
     {
         this(type, orientation, name);
         size = new Size2D(xSize, ySize);
@@ -57,11 +57,6 @@ public class Element {
     public Orientation getOrientation() {
         return orientation;
     }
-
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
     
     public String getName()
     {

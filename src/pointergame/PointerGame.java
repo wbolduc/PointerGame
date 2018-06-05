@@ -28,21 +28,21 @@ public class PointerGame extends Application{
     
     public static void main(String[] args){
         //test drawing array
-        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new ElementArray("test", Orientation.VERTICAL, 5, new Element(ValueBox.class))));
-        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new ElementArray("test", Orientation.VERTICAL, 5, new Element(PointerBox.class))));
+        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(PointerBox.class))));
 
         //test drawing struct
         //struct def
-        ElementStruct node = new ElementStruct("Node", Orientation.VERTICAL, new Element[]{
-        new Element(ValueBox.class, "data"),
-        new Element(PointerBox.class, "next")
+        DefStruct node = new DefStruct("Node", Orientation.VERTICAL, new Def[]{
+        new Def(ValueBox.class, "data"),
+        new Def(PointerBox.class, "next")
         });
         boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, node));
 
         
         
-        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), new ElementArray("test", Orientation.HORIZONTAL, 5, new Element(ValueBox.class))));
-        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), new ElementArray("test", Orientation.HORIZONTAL, 5, new Element(PointerBox.class))));
+        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(PointerBox.class))));
 
         //test drawing struct
         //struct def
@@ -92,29 +92,29 @@ public class PointerGame extends Application{
         //test printing
         //Franction Struct
         /*
-        Element numerator = new Element("numerator", ValueBox.class);
-        Element denominator = new Element("denominator", ValueBox.class);
+        Def numerator = new Def("numerator", ValueBox.class);
+        Def denominator = new Def("denominator", ValueBox.class);
         ArrayList<Element> structContents = new ArrayList<Element>();
         structContents.add(numerator);
         structContents.add(denominator);
-        ElementStruct fractionStruct = new ElementStruct("Fraction", structContents);
+        DefStruct fractionStruct = new DefStruct("Fraction", structContents);
 
         //student struct
-        Element name = new ElementArray("name", new Element(ValueBox.class), 5);
+        Def name = new DefArray("name", new Def(ValueBox.class), 5);
         structContents = new ArrayList<Element>();
         structContents.add(name);
         structContents.add(fractionStruct);
-        ElementStruct studentStruct = new ElementStruct("Student", structContents);
+        DefStruct studentStruct = new DefStruct("Student", structContents);
 
         //make an array of students
-        Element studentArray = new ElementArray("students", studentStruct, 3);
+        Def studentArray = new DefArray("students", studentStruct, 3);
         
         //Classroom Struct
         structContents = new ArrayList<Element>();
-        structContents.add(new Element("Rating", ValueBox.class));
-        structContents.add(new ElementArray("profName", new Element(ValueBox.class),10));
+        structContents.add(new Def("Rating", ValueBox.class));
+        structContents.add(new DefArray("profName", new Def(ValueBox.class),10));
         structContents.add(studentArray);
-        ElementStruct classRoom = new ElementStruct("ClassStruct", structContents);
+        DefStruct classRoom = new DefStruct("ClassStruct", structContents);
         
         
         BoxStruct temp = new BoxStruct(0,0, classRoom);

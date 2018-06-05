@@ -17,34 +17,34 @@ import javafx.scene.paint.Color;
 public class BoxArray extends Box{
     private ArrayList<Box> boxes = new ArrayList<Box>();
     private int arraySize;
-    private Element arrayElementType;
-    private ElementArray arrayDef;
+    private Def arrayElementType;
+    private DefArray arrayDef;
     //used for graphics
     private Orientation orientation;
     
-    BoxArray(int x, int y, ElementArray arrayDef)
+    BoxArray(int x, int y, DefArray arrayDef)
     {
         super(x, y);
         this. arrayDef = arrayDef;
         
         arrayElementType = arrayDef.getIndexType();
         arraySize = arrayDef.getArraySize();
-        orientation = arrayDef.orientation; //TODO: should probably just use the ElementArray
+        orientation = arrayDef.orientation; //TODO: should probably just use the DefArray
         
         Size2D elementSize = arrayElementType.get2DSize();
         Class type = arrayElementType.getType();
         
         if (orientation == Orientation.VERTICAL)
         {
-            if (type == ElementStruct.class)
+            if (type == DefStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxStruct(x, y + i*elementSize.y, (ElementStruct) arrayElementType));
+                    boxes.add(new BoxStruct(x, y + i*elementSize.y, (DefStruct) arrayElementType));
             }
-            else if (type == ElementArray.class)
+            else if (type == DefArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxArray(x, y + i*elementSize.y, (ElementArray) arrayElementType));
+                    boxes.add(new BoxArray(x, y + i*elementSize.y, (DefArray) arrayElementType));
             }
             else if (type == PointerBox.class)
             {
@@ -59,15 +59,15 @@ public class BoxArray extends Box{
         }
         else //orientation horizontal
         {
-            if (type == ElementStruct.class)
+            if (type == DefStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxStruct(x + i*elementSize.x, y, (ElementStruct) arrayElementType));
+                    boxes.add(new BoxStruct(x + i*elementSize.x, y, (DefStruct) arrayElementType));
             }
-            else if (type == ElementArray.class)
+            else if (type == DefArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxArray(x + i*elementSize.x, y, (ElementArray) arrayElementType));
+                    boxes.add(new BoxArray(x + i*elementSize.x, y, (DefArray) arrayElementType));
             }
             else if (type == PointerBox.class)
             {
@@ -117,7 +117,7 @@ public class BoxArray extends Box{
         return boxes.get(index);
     }
     
-    public Element getBoxType()
+    public Def getBoxType()
     {
         return arrayElementType;
     }

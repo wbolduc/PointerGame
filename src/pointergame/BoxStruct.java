@@ -14,14 +14,14 @@ import javafx.scene.paint.Color;
  * @author wbolduc
  */
 public class BoxStruct extends Box{
-    private ElementStruct structDef;
+    private DefStruct structDef;
     private HashMap<String,Box> elements = new HashMap<String,Box>();
     
     private Orientation orientation = Orientation.HORIZONTAL;
     
     private int maxNameLength = 0;
     
-    BoxStruct(int x, int y, ElementStruct structDef)
+    BoxStruct(int x, int y, DefStruct structDef)
     {
         super(x,y);
         
@@ -32,13 +32,13 @@ public class BoxStruct extends Box{
         if (orientation == Orientation.HORIZONTAL)
         {
             //loops through the elements defined in structDef and creates them recursively in "actual memory"
-            for(Element e : structDef.getStructElements())
+            for(Def e : structDef.getStructElements())
             {   
                 Class type = e.getType();
-                if (type == ElementStruct.class)
-                    elements.put(e.getName(), new BoxStruct(x+offset,y,(ElementStruct)e));
-                else if (type == ElementArray.class)
-                    elements.put(e.getName(), new BoxArray(x+offset,y,(ElementArray)e));
+                if (type == DefStruct.class)
+                    elements.put(e.getName(), new BoxStruct(x+offset,y,(DefStruct)e));
+                else if (type == DefArray.class)
+                    elements.put(e.getName(), new BoxArray(x+offset,y,(DefArray)e));
                 else if (type == PointerBox.class)
                     elements.put(e.getName(), new PointerBox(x+offset,y));
                 else //valueBox
@@ -51,13 +51,13 @@ public class BoxStruct extends Box{
         {
             System.out.println("Vert");
             //loops through the elements defined in structDef and creates them recursively in "actual memory"   
-            for(Element e : structDef.getStructElements())
+            for(Def e : structDef.getStructElements())
             {   
                 Class type = e.getType();
-                if (type == ElementStruct.class)
-                    elements.put(e.getName(), new BoxStruct(x,y+offset,(ElementStruct)e));
-                else if (type == ElementArray.class)
-                    elements.put(e.getName(), new BoxArray(x,y+offset,(ElementArray)e));
+                if (type == DefStruct.class)
+                    elements.put(e.getName(), new BoxStruct(x,y+offset,(DefStruct)e));
+                else if (type == DefArray.class)
+                    elements.put(e.getName(), new BoxArray(x,y+offset,(DefArray)e));
                 else if (type == PointerBox.class)
                     elements.put(e.getName(), new PointerBox(x,y+offset));
                 else //valueBox

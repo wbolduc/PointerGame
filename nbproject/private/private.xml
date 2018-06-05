@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/Programming/Java/PointerGame/src/pointergame/PointerGame.java</file>
+            <file>file:/E:/Programming/Java/PointerGame/src/pointergame/Size2D.java</file>
+            <file>file:/E:/Programming/Java/PointerGame/src/pointergame/Element.java</file>
+            <file>file:/E:/Programming/Java/PointerGame/src/pointergame/ElementStruct.java</file>
+            <file>file:/E:/Programming/Java/PointerGame/src/pointergame/BoxStruct.java</file>
+        </group>
     </open-files>
 </project-private>

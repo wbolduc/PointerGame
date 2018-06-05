@@ -9,11 +9,11 @@ package pointergame;
  *
  * @author wbolduc
  */
-public class ElementArray extends Element{
-    private final Element indexType;
+public class DefArray extends Def{
+    private final Def indexType;
     private final int arraySize;
     
-    ElementArray(String name, Orientation orientation, int arraySize, Element type)
+    DefArray(String name, Orientation orientation, int arraySize, Def type)
     {
         super(BoxArray.class, orientation, name);
         if (orientation == Orientation.VERTICAL)
@@ -30,7 +30,7 @@ public class ElementArray extends Element{
         this.indexType = type;
         this.arraySize = arraySize;
     }
-    ElementArray(Orientation orientation, int arraySize, Element type)
+    DefArray(Orientation orientation, int arraySize, Def type)
     {
         this(null, orientation, arraySize, type);
     }
@@ -40,12 +40,12 @@ public class ElementArray extends Element{
         return arraySize;
     }
     
-    public Element getElementSize()
+    public Def getElementSize()
     {
         return indexType;
     }
     
-    public Element getIndexType()
+    public Def getIndexType()
     {
         return indexType;
     }

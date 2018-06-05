@@ -5,24 +5,27 @@
  */
 package pointergame;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author wbolduc
  */
-public class ElementStruct extends Element
+public class DefStruct extends Def
 {
-    private final Element[] structElements;
+    private final Def[] structElements;
     
-    ElementStruct(String name, Orientation orientation, Element[] structElements)
+    DefStruct(String name, Orientation orientation, Def[] structElements)
     {
         super(BoxStruct.class, orientation, name);
-        
+        this.structElements = structElements;
+        updateDimensions();
+    }
+    
+    private void updateDimensions()
+    {
         size = new Size2D(0,0);
         if (orientation == Orientation.HORIZONTAL)
         {
-            for (Element e: structElements)
+            for (Def e: structElements)
             {
                 if (e.size.y > size.y)
                 {
@@ -33,8 +36,7 @@ public class ElementStruct extends Element
         }
         else
         {
-            System.out.print("RORORO");
-            for (Element e: structElements)
+            for (Def e: structElements)
             {
                 if (e.size.x > size.x)
                 {
@@ -43,10 +45,14 @@ public class ElementStruct extends Element
                 size.y += e.size.y;
             }
         }
-        this.structElements = structElements;
     }
     
-    public Element[] getStructElements()
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+        updateDimensions();
+    }
+    
+    public Def[] getStructElements()
     {
         return structElements;
     }
@@ -56,7 +62,7 @@ public class ElementStruct extends Element
         System.out.println("Struct: " + name);
         indent += "      | ";
         
-        for (Element e : structElements)
+        for (Def e : structElements)
         {
             System.out.print(indent);
             System.out.print(e.getName() + ": ");
