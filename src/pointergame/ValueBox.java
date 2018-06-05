@@ -16,23 +16,27 @@ import javafx.scene.text.TextAlignment;
  * @author wbolduc
  */
 public class ValueBox extends Box {
-    private char content;
+    private char value;
     private boolean uninitialized = true;
 
     ValueBox(int x, int y, char value) {
         super(x, y);
-        content = value;
+        this.value = value;
         uninitialized = false;
     }
     
     ValueBox(int x, int y) {
         super(x, y);
     }
+    ValueBox()
+    {
+        super(0,0);
+    }
     
     //Setters
-    public void setContents(char value)
+    public void setValue(char value)
     {
-        content = value;
+        this.value = value;
     }
     
     //Util
@@ -41,7 +45,7 @@ public class ValueBox extends Box {
         if (uninitialized == true)
             System.out.println("Uninitialized ValueBox");
         else
-            System.out.println("ValueBox storing " + content);
+            System.out.println("ValueBox storing " + value);
     }
     
     public void drawBox(GraphicsContext gc)
@@ -60,7 +64,7 @@ public class ValueBox extends Box {
             gc.setFont( theFont );
             gc.setTextAlign(TextAlignment.CENTER);
             gc.setTextBaseline(VPos.CENTER);
-            gc.strokeText(""+content, x+size.x/2, y+size.y/2, size.x);
+            gc.strokeText(""+value, x+size.x/2, y+size.y/2, size.x);
         }
     }
 }

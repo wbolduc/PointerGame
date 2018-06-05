@@ -56,6 +56,20 @@ public class Box {
         this.y = y;
     }
     
+    public void moveTo(int x, int y)
+    {
+        int xChange = x - this.x;
+        int yChange = y - this.y;
+        
+        moveBy(xChange, yChange);
+    }
+    
+    public void moveBy(int x, int y)
+    {
+        this.x += x;
+        this.y += y;
+    }
+    
     //mutators
     public void addOrigin(Box origin)
     {

@@ -137,7 +137,17 @@ public class BoxArray extends Box{
         }
     }
     
-    //Setters
+    //Setters    
+    public void moveBy(int x, int y)
+    {
+        this.x += x;
+        this.y += y;
+        for (Box b : boxes)
+        {
+            b.moveBy(x, y);
+        }
+    }
+    
     public void setBoxAt(Box box, int index)
     {
         //check for ranges
@@ -162,7 +172,13 @@ public class BoxArray extends Box{
         boxes.set(index, box);
     }
     
+    
     //Getters
+    public ArrayList<Box> getBoxes()
+    {
+        return boxes;
+    }
+    
     public Box getBoxAt(int index)
     {
         //check for ranges

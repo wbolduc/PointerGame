@@ -28,25 +28,8 @@ public class PointerGame extends Application{
     
     public static void main(String[] args){
         //test drawing array
-        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("test", 5, new Def(ValueBox.class))));
-        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("test", 5, new Def(PointerBox.class))));
-
-        //test drawing struct
-        //struct def
-        DefStruct node = new DefStruct("Node", new Def[]{
-        new DefArray("id", 3, new Def(ValueBox.class)),
-        new Def(PointerBox.class, "next")
-        });
-        boxes.add(new BoxArray(20+2*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("woah", 4, node)));
-
-        
-        
-        boxes.add(new BoxArray(300, 20+0*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class))));
-        boxes.add(new BoxArray(300, 20+1*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(PointerBox.class))));
-
-        //test drawing struct
-        //struct def
-        boxes.add(new BoxArray(300, 20+2*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("woah", 4, node)));
+        structuresWithPointers(5,5);
+        recursiveStaticStructures(20, 300);
         launch(args);
     }
     
@@ -85,42 +68,40 @@ public class PointerGame extends Application{
         System.out.println("----------------------------------------------------------");
     }
     
-    //tests
-    public static void bigStructTest()
+    public static void structuresWithPointers(int x, int y)
     {
-        //test printing
-        //Franction Struct
-        /*
-        Def numerator = new Def("numerator", ValueBox.class);
-        Def denominator = new Def("denominator", ValueBox.class);
-        ArrayList<Element> structContents = new ArrayList<Element>();
-        structContents.add(numerator);
-        structContents.add(denominator);
-        DefStruct fractionStruct = new DefStruct("Fraction", structContents);
+        BoxArray arrayOfPointersToValues = new BoxArray(x,y,Orientation.HORIZONTAL, new DefArray(3, new Def(PointerBox.class)));
+        boxes.add(arrayOfPointersToValues);
+        for (Box b : arrayOfPointersToValues.getBoxes())
+        {
+            PointerBox p = (PointerBox)b;
+            ValueBox vb = new ValueBox(30,100);
+            boxes.add(vb);
+            p.setPointer(vb);
+        }
+    }
+    
+    //tests
+    public static void recursiveStaticStructures(int x, int y)
+    {
+        boxes.add(new BoxArray(x,y, Orientation.VERTICAL, new DefArray("test", 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(x+(BOX_SIZE + 20),y, Orientation.VERTICAL, new DefArray("test", 5, new Def(PointerBox.class))));
 
-        //student struct
-        Def name = new DefArray("name", new Def(ValueBox.class), 5);
-        structContents = new ArrayList<Element>();
-        structContents.add(name);
-        structContents.add(fractionStruct);
-        DefStruct studentStruct = new DefStruct("Student", structContents);
+        //test drawing struct
+        //struct def
+        DefStruct node = new DefStruct("Node", new Def[]{
+        new DefArray("id", 3, new Def(ValueBox.class)),
+        new Def(PointerBox.class, "next")
+        });
+        boxes.add(new BoxArray(x+2*(BOX_SIZE + 20),y, Orientation.VERTICAL, new DefArray("woah", 4, node)));
 
-        //make an array of students
-        Def studentArray = new DefArray("students", studentStruct, 3);
-        
-        //Classroom Struct
-        structContents = new ArrayList<Element>();
-        structContents.add(new Def("Rating", ValueBox.class));
-        structContents.add(new DefArray("profName", new Def(ValueBox.class),10));
-        structContents.add(studentArray);
-        DefStruct classRoom = new DefStruct("ClassStruct", structContents);
         
         
-        BoxStruct temp = new BoxStruct(0,0, classRoom);
-        classRoom.printStructure();
-        lineBreak();
-        temp.showChain();
-        lineBreak();
-        */
+        boxes.add(new BoxArray(x+300, y, Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(x+300, y+(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(PointerBox.class))));
+
+        //test drawing struct
+        //struct def
+        boxes.add(new BoxArray(x+300, y+2*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("woah", 4, node)));
     }
 }   

@@ -79,6 +79,16 @@ public class BoxStruct extends Box{
         }    
     }
     
+    public void moveBy(int x, int y)
+    {
+        this.x += x;
+        this.y += y;
+        for (Box b : elements.values())
+        {
+            b.moveBy(x, y);
+        }
+    }
+    
     /*
     private void updateDimensions()
     {
