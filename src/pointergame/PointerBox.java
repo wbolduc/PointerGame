@@ -21,6 +21,11 @@ public class PointerBox extends Box{
         super(x,y);
         this.pointingTo = BadBox.getInstance();
     }
+    PointerBox(int x, int y, Orientation orientation)
+    {
+        this(x,y);
+        this.orientation = orientation;
+    }
 
     //Mutators
     public PointerBox setPointer(Box dest)

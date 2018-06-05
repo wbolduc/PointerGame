@@ -23,6 +23,9 @@ public class Box {
     protected int x;
     protected int y;
     
+    protected Size2D size = new Size2D(BOX_SIZE, BOX_SIZE);
+    protected Orientation orientation = Orientation.HORIZONTAL;
+    
     private ArrayList<Box> pointedToBy = new ArrayList<Box>();
 
     Box(int x, int y)
@@ -30,6 +33,13 @@ public class Box {
         this.x = x;
         this.y = y;
     }        
+    
+    Box(int x, int y, Orientation orientation)
+    {
+        this(x,y);
+        this.orientation = orientation;
+    }
+    
     
     //Setters
     public void setX(int x)
@@ -69,6 +79,11 @@ public class Box {
     {
         return pointedToBy;
     }
+    
+    public Orientation getOrientation() {
+        return orientation;
+    }
+    
     
     /*    
     //pointer expression generation

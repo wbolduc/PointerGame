@@ -28,26 +28,25 @@ public class PointerGame extends Application{
     
     public static void main(String[] args){
         //test drawing array
-        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(ValueBox.class))));
-        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(PointerBox.class))));
+        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("test", 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("test", 5, new Def(PointerBox.class))));
 
         //test drawing struct
         //struct def
-        DefStruct node = new DefStruct("Node", Orientation.VERTICAL, new Def[]{
+        DefStruct node = new DefStruct("Node", new Def[]{
         new Def(ValueBox.class, "data"),
         new Def(PointerBox.class, "next")
         });
-        boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, node));
+        boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, Orientation.VERTICAL, node));
 
         
         
-        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(ValueBox.class))));
-        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(PointerBox.class))));
+        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(PointerBox.class))));
 
         //test drawing struct
         //struct def
-        node.setOrientation(Orientation.HORIZONTAL);
-        boxes.add(new BoxStruct(400, 20+2*(BOX_SIZE + 20), node));
+        boxes.add(new BoxStruct(400, 20+2*(BOX_SIZE + 20), Orientation.HORIZONTAL, node));
         launch(args);
     }
     

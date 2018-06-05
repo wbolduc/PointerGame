@@ -22,63 +22,118 @@ public class BoxArray extends Box{
     //used for graphics
     private Orientation orientation;
     
-    BoxArray(int x, int y, DefArray arrayDef)
+    BoxArray(int x, int y, Orientation orientation, DefArray arrayDef)
     {
         super(x, y);
-        this. arrayDef = arrayDef;
-        
+        this.arrayDef = arrayDef;
         arrayElementType = arrayDef.getIndexType();
         arraySize = arrayDef.getArraySize();
-        orientation = arrayDef.orientation; //TODO: should probably just use the DefArray
+
+        this.orientation = orientation;
         
-        Size2D elementSize = arrayElementType.get2DSize();
         Class type = arrayElementType.getType();
+        
+        
+        size = new Size2D(0,0);
+        Box toAdd = null;
+        if (arraySize <= 0) //nothing to draw or add
+            return;
         
         if (orientation == Orientation.VERTICAL)
         {
             if (type == DefStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxStruct(x, y + i*elementSize.y, (DefStruct) arrayElementType));
+                {
+                    //Add Box to array
+                    toAdd = new BoxStruct(x, y + size.y, Orientation.HORIZONTAL, (DefStruct) arrayElementType);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.y += toAdd.size.y;
+                }
             }
             else if (type == DefArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxArray(x, y + i*elementSize.y, (DefArray) arrayElementType));
+                {
+                    //Add Box to array
+                    toAdd = new BoxArray(x, y + size.y, Orientation.HORIZONTAL, (DefArray) arrayElementType);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.y += toAdd.size.y;
+                }
             }
             else if (type == PointerBox.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new PointerBox(x, y + i*elementSize.y));
+                {
+                    //Add Box to array
+                    toAdd = new PointerBox(x, y + size.y, Orientation.HORIZONTAL);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.y += toAdd.size.y;
+                }
             }
             else //valueBox
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new ValueBox(x, y + i*elementSize.y));
+                {
+                    //Add Box to array
+                    toAdd = new ValueBox(x, y + size.y);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.y += toAdd.size.y;
+                }
             }
+            size.x = toAdd.size.x;
         }
         else //orientation horizontal
         {
             if (type == DefStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxStruct(x + i*elementSize.x, y, (DefStruct) arrayElementType));
+                {
+                    //Add Box to array
+                    toAdd = new BoxStruct(x + size.x, y, Orientation.VERTICAL, (DefStruct) arrayElementType);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.x += toAdd.size.x;
+                }
             }
             else if (type == DefArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new BoxArray(x + i*elementSize.x, y, (DefArray) arrayElementType));
+                {
+                    //Add Box to array
+                    toAdd = new BoxArray(x + size.x, y, Orientation.VERTICAL, (DefArray) arrayElementType);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.x += toAdd.size.x;
+                }
             }
             else if (type == PointerBox.class)
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new PointerBox(x + i*elementSize.x, y));
+                {
+                    //Add Box to array
+                    toAdd = new PointerBox(x + size.x, y, Orientation.VERTICAL);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.x += toAdd.size.x;
+                }
             }
             else //valueBox
             {
                 for (int i = 0; i < arraySize; i++)
-                    boxes.add(new ValueBox(x + i*elementSize.x, y));
+                {
+                    //Add Box to array
+                    toAdd = new ValueBox(x + size.x, y);
+                    boxes.add(toAdd);
+                    //increase array graphical size by the size of that box
+                    size.x += toAdd.size.x;
+                }
             }
+            size.y = toAdd.size.y;
         }
     }
     
@@ -165,7 +220,7 @@ public class BoxArray extends Box{
     public void drawBox(GraphicsContext gc)
     {
         gc.setStroke(Color.GREEN);
-        gc.strokeRect(x-2, y-2, arrayDef.size.x+4, arrayDef.size.y+4);
+        gc.strokeRect(x-2, y-2, size.x+4, size.y+4);
         System.out.println(boxes.size());
         for (Box b : boxes)
         {

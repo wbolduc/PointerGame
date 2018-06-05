@@ -13,43 +13,10 @@ public class DefStruct extends Def
 {
     private final Def[] structElements;
     
-    DefStruct(String name, Orientation orientation, Def[] structElements)
+    DefStruct(String name, Def[] structElements)
     {
-        super(BoxStruct.class, orientation, name);
+        super(BoxStruct.class);
         this.structElements = structElements;
-        updateDimensions();
-    }
-    
-    private void updateDimensions()
-    {
-        size = new Size2D(0,0);
-        if (orientation == Orientation.HORIZONTAL)
-        {
-            for (Def e: structElements)
-            {
-                if (e.size.y > size.y)
-                {
-                    size.y = e.size.y;
-                }
-                size.x += e.size.x;
-            }
-        }
-        else
-        {
-            for (Def e: structElements)
-            {
-                if (e.size.x > size.x)
-                {
-                    size.x = e.size.x;
-                }
-                size.y += e.size.y;
-            }
-        }
-    }
-    
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-        updateDimensions();
     }
     
     public Def[] getStructElements()

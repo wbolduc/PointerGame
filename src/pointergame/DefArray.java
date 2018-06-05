@@ -13,26 +13,15 @@ public class DefArray extends Def{
     private final Def indexType;
     private final int arraySize;
     
-    DefArray(String name, Orientation orientation, int arraySize, Def type)
+    DefArray(String name, int arraySize, Def type)
     {
-        super(BoxArray.class, orientation, name);
-        if (orientation == Orientation.VERTICAL)
-        {
-            System.out.print("vert");
-            size = new Size2D(type.get2DSize().x, type.get2DSize().y * arraySize);            
-
-        }
-        else
-        {
-            size = new Size2D(type.get2DSize().x * arraySize, type.get2DSize().y);            
-        }
-        
+        super(BoxArray.class);
         this.indexType = type;
         this.arraySize = arraySize;
     }
-    DefArray(Orientation orientation, int arraySize, Def type)
+    DefArray(int arraySize, Def type)
     {
-        this(null, orientation, arraySize, type);
+        this(null, arraySize, type);
     }
 
     public int getArraySize()
@@ -54,10 +43,5 @@ public class DefArray extends Def{
     {
         String output = "Array of " + Integer.toString(arraySize) + " ";
         System.out.print(output);
-    }
-    
-    public Size2D get2dSize()
-    {
-        return size;
     }
 }
