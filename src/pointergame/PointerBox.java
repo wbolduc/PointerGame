@@ -7,7 +7,6 @@ package pointergame;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import static pointergame.Box.BOX_SIZE;
 
 /**
  *
@@ -68,12 +67,12 @@ public class PointerBox extends Box{
     public void drawBox(GraphicsContext gc)
     {
         gc.setStroke(Color.BLACK);
-        gc.strokeRect(x, y, BOX_SIZE, BOX_SIZE);
+        gc.strokeRect(x, y, size.x, size.y);
         
         if (pointingTo == null)
         {
             gc.setStroke(Color.BLUE);
-            gc.strokeOval(x, y, BOX_SIZE, BOX_SIZE);
+            gc.strokeOval(x, y, size.x, size.y);
         }
         else if (pointingTo instanceof BadBox)
         {
@@ -82,7 +81,7 @@ public class PointerBox extends Box{
         else
         {
             
-            CustomShape.arrow(gc, x+BOX_SIZE/2, y+BOX_SIZE/2, pointingTo.x+BOX_SIZE/2, pointingTo.y+BOX_SIZE/2, 10, 15, Color.BLUE);
+            CustomShape.arrow(gc, x+size.x/2, y+size.y/2, pointingTo.x+size.x/2, pointingTo.y+size.y/2, 10, 15, Color.BLUE);
             
             //gc.strokeLine(x+BOX_SIZE/2, y+BOX_SIZE/2, pointingTo.x+BOX_SIZE/2, pointingTo.y+BOX_SIZE/2);
         }

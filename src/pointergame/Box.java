@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 
 
 public class Box {    
-    public static final int BOX_SIZE = 80;
+    public static final int BOX_SIZE = 50;
     public static final String MIN_INDENT = "  ";
     protected int x;
     protected int y;

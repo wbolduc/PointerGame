@@ -11,17 +11,12 @@ package pointergame;
  */
 public class DefStruct extends Def
 {
-    private final Def[] structElements;
+    final Def[] elements;
     
     DefStruct(String name, Def[] structElements)
     {
-        super(BoxStruct.class);
-        this.structElements = structElements;
-    }
-    
-    public Def[] getStructElements()
-    {
-        return structElements;
+        super(BoxStruct.class, name);
+        this.elements = structElements;
     }
     
     public void printStructure(String indent)
@@ -29,15 +24,11 @@ public class DefStruct extends Def
         System.out.println("Struct: " + name);
         indent += "      | ";
         
-        for (Def e : structElements)
+        for (Def e : elements)
         {
             System.out.print(indent);
-            System.out.print(e.getName() + ": ");
+            System.out.print(e.name + ": ");
 //            e.printStructure(indent + PointerGame.indentPad(e.getName().length()+2));
         }
-    }
-    public void get2Dsize()
-    {
-        System.out.println("I am here");
     }
 }

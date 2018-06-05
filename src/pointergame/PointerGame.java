@@ -34,19 +34,19 @@ public class PointerGame extends Application{
         //test drawing struct
         //struct def
         DefStruct node = new DefStruct("Node", new Def[]{
-        new Def(ValueBox.class, "data"),
+        new DefArray("id", 3, new Def(ValueBox.class)),
         new Def(PointerBox.class, "next")
         });
-        boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, Orientation.VERTICAL, node));
+        boxes.add(new BoxArray(20+2*(BOX_SIZE + 20),20, Orientation.VERTICAL, new DefArray("woah", 4, node)));
 
         
         
-        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class))));
-        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(PointerBox.class))));
+        boxes.add(new BoxArray(300, 20+0*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(300, 20+1*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("test", 5, new Def(PointerBox.class))));
 
         //test drawing struct
         //struct def
-        boxes.add(new BoxStruct(400, 20+2*(BOX_SIZE + 20), Orientation.HORIZONTAL, node));
+        boxes.add(new BoxArray(300, 20+2*(BOX_SIZE + 20), Orientation.HORIZONTAL, new DefArray("woah", 4, node)));
         launch(args);
     }
     

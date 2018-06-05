@@ -30,13 +30,13 @@ public class BoxStruct extends Box{
         if (orientation == Orientation.VERTICAL)
         {
             //loops through the elements defined in structDef and creates them recursively in "actual memory"   
-            for(Def e : structDef.getStructElements())
+            for(Def e : structDef.elements)
             {   
-                Class type = e.getType();
+                Class type = e.type;
                 Box toAdd;
-                if (type == DefStruct.class)
+                if (type == BoxStruct.class)
                     toAdd = new BoxStruct(x,y+size.y,Orientation.HORIZONTAL, (DefStruct)e);
-                else if (type == DefArray.class)
+                else if (type == BoxArray.class)
                     toAdd = new BoxArray(x,y+size.y,Orientation.HORIZONTAL, (DefArray)e);
                 else if (type == PointerBox.class)
                     toAdd = new PointerBox(x,y+size.y,Orientation.HORIZONTAL);
@@ -44,7 +44,7 @@ public class BoxStruct extends Box{
                     toAdd = new ValueBox(x,y+size.y);
                 
                 //add box to struct
-                elements.put(e.getName(), toAdd);
+                elements.put(e.name, toAdd);
                 
                 //increase graphical size of struct
                 size.y += toAdd.size.y;
@@ -55,13 +55,13 @@ public class BoxStruct extends Box{
         else
         {
             //loops through the elements defined in structDef and creates them recursively in "actual memory"
-            for(Def e : structDef.getStructElements())
+            for(Def e : structDef.elements)
             {   
-                Class type = e.getType();
+                Class type = e.type;
                 Box toAdd;
-                if (type == DefStruct.class)
+                if (type == BoxStruct.class)
                     toAdd = new BoxStruct(x+size.x,y,Orientation.VERTICAL, (DefStruct)e);
-                else if (type == DefArray.class)
+                else if (type == BoxArray.class)
                     toAdd = new BoxArray(x+size.x,y,Orientation.VERTICAL, (DefArray)e);
                 else if (type == PointerBox.class)
                     toAdd = new PointerBox(x+size.x,y,Orientation.VERTICAL);
@@ -69,7 +69,7 @@ public class BoxStruct extends Box{
                     toAdd = new ValueBox(x+size.x,y);
                 
                 //add box to struct
-                elements.put(e.getName(), toAdd);
+                elements.put(e.name, toAdd);
                 
                 //increase graphical size of struct
                 size.x += toAdd.size.x;
@@ -85,7 +85,7 @@ public class BoxStruct extends Box{
         size = new Size2D(0,0);
         if (orientation == Orientation.HORIZONTAL)
         {
-            for (Def e: structElements)
+            for (Def e: elements)
             {
                 if (e.size.y > size.y)
                 {
@@ -96,7 +96,7 @@ public class BoxStruct extends Box{
         }
         else
         {
-            for (Def e: structElements)
+            for (Def e: elements)
             {
                 if (e.size.x > size.x)
                 {
@@ -110,7 +110,7 @@ public class BoxStruct extends Box{
     
     public void showChain(String indent)
     {
-        String structName = structDef.getName();
+        String structName = structDef.name;
         System.out.println(structName);
         indent += Box.MIN_INDENT + "| ";
         

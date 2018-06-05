@@ -10,8 +10,8 @@ package pointergame;
  * @author wbolduc
  */
 public class DefArray extends Def{
-    private final Def indexType;
-    private final int arraySize;
+    final Def indexType;
+    final int arraySize;
     
     DefArray(String name, int arraySize, Def type)
     {
@@ -22,21 +22,6 @@ public class DefArray extends Def{
     DefArray(int arraySize, Def type)
     {
         this(null, arraySize, type);
-    }
-
-    public int getArraySize()
-    {
-        return arraySize;
-    }
-    
-    public Def getElementSize()
-    {
-        return indexType;
-    }
-    
-    public Def getIndexType()
-    {
-        return indexType;
     }
     
     public void printStructure(String indent)

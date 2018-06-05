@@ -12,27 +12,18 @@ package pointergame;
  */
 
 public class Def {
-    protected String name = null;
-    private Class type;    
+    final String name;
+    final Class type;    
 
     protected Def(Class type)
     {
         this.type = type;
+        this.name = null;
     }    
     
     protected Def(Class type, String name)
     {
-        this(type);
+        this.type = type;
         this.name = name;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-    
-    public Class getType()
-    {
-        return type;
     }
 }

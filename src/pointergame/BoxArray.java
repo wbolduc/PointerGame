@@ -26,12 +26,12 @@ public class BoxArray extends Box{
     {
         super(x, y);
         this.arrayDef = arrayDef;
-        arrayElementType = arrayDef.getIndexType();
-        arraySize = arrayDef.getArraySize();
+        arrayElementType = arrayDef.indexType;
+        arraySize = arrayDef.arraySize;
 
         this.orientation = orientation;
         
-        Class type = arrayElementType.getType();
+        Class type = arrayElementType.type;
         
         
         size = new Size2D(0,0);
@@ -41,7 +41,7 @@ public class BoxArray extends Box{
         
         if (orientation == Orientation.VERTICAL)
         {
-            if (type == DefStruct.class)
+            if (type == BoxStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
                 {
@@ -52,7 +52,7 @@ public class BoxArray extends Box{
                     size.y += toAdd.size.y;
                 }
             }
-            else if (type == DefArray.class)
+            else if (type == BoxArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
                 {
@@ -89,7 +89,7 @@ public class BoxArray extends Box{
         }
         else //orientation horizontal
         {
-            if (type == DefStruct.class)
+            if (type == BoxStruct.class)
             {
                 for (int i = 0; i < arraySize; i++)
                 {
@@ -100,7 +100,7 @@ public class BoxArray extends Box{
                     size.x += toAdd.size.x;
                 }
             }
-            else if (type == DefArray.class)
+            else if (type == BoxArray.class)
             {
                 for (int i = 0; i < arraySize; i++)
                 {

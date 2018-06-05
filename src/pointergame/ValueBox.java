@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import static pointergame.Box.BOX_SIZE;
 
 /**
  *
@@ -48,12 +47,12 @@ public class ValueBox extends Box {
     public void drawBox(GraphicsContext gc)
     {
         gc.setStroke(Color.BLACK);
-        gc.strokeRect(x, y, BOX_SIZE, BOX_SIZE);
+        gc.strokeRect(x, y, size.x, size.y);
         if (uninitialized == true)
         {
             gc.setStroke(Color.RED);
-            gc.strokeLine(x, y, x + BOX_SIZE, y + BOX_SIZE);
-            gc.strokeLine(x, y + BOX_SIZE, x + BOX_SIZE, y);
+            gc.strokeLine(x, y, x + size.x, y + size.y);
+            gc.strokeLine(x, y + size.y, x + size.x, y);
         }
         else
         {
@@ -61,7 +60,7 @@ public class ValueBox extends Box {
             gc.setFont( theFont );
             gc.setTextAlign(TextAlignment.CENTER);
             gc.setTextBaseline(VPos.CENTER);
-            gc.strokeText(""+content, x+BOX_SIZE/2, y+BOX_SIZE/2, BOX_SIZE);
+            gc.strokeText(""+content, x+size.x/2, y+size.y/2, size.x);
         }
     }
 }
