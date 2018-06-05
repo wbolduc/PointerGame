@@ -1,0 +1,221 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pointergame;
+
+
+import java.util.ArrayList;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
+import static pointergame.Box.BOX_SIZE;
+
+/**
+ *
+ * @author wbolduc
+ */
+
+public class PointerGame extends Application{
+    public static final int xSize = 1000;
+    public static final int ySize = 1000;
+    public static final int BOX_SIZE = 100;
+    
+<<<<<<< HEAD
+    public static void main(String[] args) throws InterruptedException{
+        JFrame frame = new JFrame("PointerVisualizer");
+	PointerVisualizer pv = new PointerVisualizer();
+	frame.add(pv);
+	frame.setSize(xSize, ySize);
+	frame.setVisible(true);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        
+        
+        //TODO: badBox should not be a singleton
+<<<<<<< HEAD
+        
+=======
+        PointerBox pb = new PointerBox(xSize/2 - Box.BOX_SIZE/2, ySize/2 - Box.BOX_SIZE/2);
+        ValueBox vb = new ValueBox(0,0);
+        
+        pb.setPointer(vb);
+=======
+    public static final ArrayList<Box> boxes = new ArrayList<Box>();
+    
+    public static void main(String[] args){
+        //test drawing array
+        boxes.add(new BoxArray(20+0*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(20+1*(BOX_SIZE + 20),20, new DefArray("test", Orientation.VERTICAL, 5, new Def(PointerBox.class))));
+
+        //test drawing struct
+        //struct def
+        DefStruct node = new DefStruct("Node", Orientation.VERTICAL, new Def[]{
+        new Def(ValueBox.class, "data"),
+        new Def(PointerBox.class, "next")
+        });
+        boxes.add(new BoxStruct(20+2*(BOX_SIZE + 20),20, node));
+
+>>>>>>> Refactoring-to-JavaFx
+        
+        
+<<<<<<< HEAD
+        int stepTime = 1000;
+        while(true)
+        {
+            while(vb.getX() < xSize - Box.BOX_SIZE)
+            {
+                vb.setX(vb.getX()+50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() < ySize - Box.BOX_SIZE)
+            {
+                vb.setY(vb.getY()+50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getX() > 0)
+            {
+                vb.setX(vb.getX()-50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() > 0)
+            {
+                vb.setY(vb.getY()-50);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+        }
+>>>>>>> parent of 1385efa... Basic arrow being drawn correctly
+    }
+=======
+        boxes.add(new BoxArray(400, 20+0*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(ValueBox.class))));
+        boxes.add(new BoxArray(400, 20+1*(BOX_SIZE + 20), new DefArray("test", Orientation.HORIZONTAL, 5, new Def(PointerBox.class))));
+
+        //test drawing struct
+        //struct def
+        node.setOrientation(Orientation.HORIZONTAL);
+        boxes.add(new BoxStruct(400, 20+2*(BOX_SIZE + 20), node));
+        launch(args);
+    }
+    
+    public void start(Stage theStage) 
+    {
+        theStage.setTitle( "Pointer Visualizer" );
+
+        Group root = new Group();
+        Scene theScene = new Scene( root );
+        theStage.setScene( theScene );
+
+        Canvas canvas = new Canvas( xSize, ySize );
+        root.getChildren().add( canvas );
+
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        for (Box b : boxes)
+        {
+            b.drawBox(gc);
+        }
+>>>>>>> Refactoring-to-JavaFx
+
+        theStage.show();
+    }
+    
+    //Util
+    public static String indentPad(int padSize) {
+        String indent = "";
+        for (int i = 0; i < padSize; i++) {
+            indent += " ";
+        }
+        return indent;
+    }
+    
+    static void lineBreak()
+    {
+        System.out.println("----------------------------------------------------------");
+    }
+    
+    //tests
+    public static void bigStructTest()
+    {
+        //test printing
+        //Franction Struct
+        /*
+        Def numerator = new Def("numerator", ValueBox.class);
+        Def denominator = new Def("denominator", ValueBox.class);
+        ArrayList<Element> structContents = new ArrayList<Element>();
+        structContents.add(numerator);
+        structContents.add(denominator);
+        DefStruct fractionStruct = new DefStruct("Fraction", structContents);
+
+        //student struct
+        Def name = new DefArray("name", new Def(ValueBox.class), 5);
+        structContents = new ArrayList<Element>();
+        structContents.add(name);
+        structContents.add(fractionStruct);
+        DefStruct studentStruct = new DefStruct("Student", structContents);
+
+        //make an array of students
+        Def studentArray = new DefArray("students", studentStruct, 3);
+        
+        //Classroom Struct
+        structContents = new ArrayList<Element>();
+        structContents.add(new Def("Rating", ValueBox.class));
+        structContents.add(new DefArray("profName", new Def(ValueBox.class),10));
+        structContents.add(studentArray);
+        DefStruct classRoom = new DefStruct("ClassStruct", structContents);
+        
+        
+        BoxStruct temp = new BoxStruct(0,0, classRoom);
+        classRoom.printStructure();
+        lineBreak();
+        temp.showChain();
+        lineBreak();
+        */
+    }
+    
+    public static void lineDrawTest(PointerVisualizer pv)
+    {
+        PointerBox pb = new PointerBox(xSize/2 - Box.BOX_SIZE/2, ySize/2 - Box.BOX_SIZE/2);
+        ValueBox vb = new ValueBox(600,200);
+        
+        pb.setPointer(vb);
+        
+        pv.addBox(pb);
+        pv.addBox(vb);
+        
+        int stepTime = 16;
+        while(true)
+        {
+            while(vb.getX() < xSize - Box.BOX_SIZE)
+            {
+                vb.setX(vb.getX()+1);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() < ySize - Box.BOX_SIZE)
+            {
+                vb.setY(vb.getY()+1);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getX() > 0)
+            {
+                vb.setX(vb.getX()-1);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+            while(vb.getY() > 0)
+            {
+                vb.setY(vb.getY()-1);
+                Thread.sleep(stepTime);
+                pv.repaint();
+            }
+        }
+    }
+}   
