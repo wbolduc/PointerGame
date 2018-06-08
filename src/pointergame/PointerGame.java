@@ -28,8 +28,11 @@ public class PointerGame extends Application{
     
     public static void main(String[] args){
         //test drawing array
-        structuresWithPointers(5,5);
-        recursiveStaticStructures(20, 300);
+        //structuresWithPointers(5,5);
+        
+        BoxArray ba = testdynamic3DArray();
+        ba.setArrange(20, 20);
+        //recursiveStaticStructures(20, 300);
         launch(args);
     }
     
@@ -70,16 +73,45 @@ public class PointerGame extends Application{
     
     public static void structuresWithPointers(int x, int y)
     {
-        BoxArray arrayOfPointersToValues = new BoxArray(x,y,Orientation.HORIZONTAL, new DefArray(3, new Def(PointerBox.class)));
-        boxes.add(arrayOfPointersToValues);
-        for (Box b : arrayOfPointersToValues.getBoxes())
+        BoxArray structure = new BoxArray(x,y,Orientation.VERTICAL, new DefArray(3, new Def(PointerBox.class)));
+        
+        boxes.add(structure);
+        
+        for (Box b : structure.getBoxes())
         {
             PointerBox p = (PointerBox)b;
-            ValueBox vb = new ValueBox(30,100);
+            BoxArray vb = new BoxArray(x,y, Orientation.HORIZONTAL, new DefArray("test", 5, new Def(ValueBox.class)));
             boxes.add(vb);
             p.setPointer(vb);
         }
+        
+        structure.setArrange(20, 20);
     }
+    
+    public static BoxArray testdynamic3DArray()
+    {
+        BoxArray structure = new BoxArray(0,0,Orientation.VERTICAL, new DefArray(3, new Def(PointerBox.class)));
+        
+        boxes.add(structure);
+        
+        for (Box b2 : structure.getBoxes())
+        {
+            PointerBox p = (PointerBox)b2;
+            BoxArray vb = new BoxArray(0,0,Orientation.HORIZONTAL, new DefArray(3, new Def(PointerBox.class)));
+            boxes.add(vb);
+            p.setPointer(vb);
+            
+            for (Box b1 : vb.getBoxes())
+            {
+                PointerBox q = (PointerBox)b1;
+                BoxArray vb1 = new BoxArray(0,0,Orientation.VERTICAL, new DefArray(3, new Def(PointerBox.class)));
+                boxes.add(vb1);
+                q.setPointer(vb1);
+            }
+        }
+        return structure;
+    }
+    
     
     //tests
     public static void recursiveStaticStructures(int x, int y)

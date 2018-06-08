@@ -18,10 +18,21 @@ public class Size2D{
         this.y = y;
     }
     
+    public Size2D clone()
+    {
+        return new Size2D(x,y);
+    }
+    
     public Size2D incrementBy(Size2D increment)
     {
         x += increment.x;
         y += increment.y;
+        return this;
+    }
+    public Size2D incrementBy(int x, int y)
+    {
+        this.x += x;
+        this.y += y;
         return this;
     }
 }

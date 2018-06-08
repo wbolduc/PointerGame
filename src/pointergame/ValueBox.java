@@ -47,9 +47,13 @@ public class ValueBox extends Box {
         else
             System.out.println("ValueBox storing " + value);
     }
+    //graphics
     
     public void drawBox(GraphicsContext gc)
     {
+        //gc.setStroke(Color.CHARTREUSE);
+        //gc.strokeRect(x, y, effectiveSize.x, effectiveSize.y);
+        
         gc.setStroke(Color.BLACK);
         gc.strokeRect(x, y, size.x, size.y);
         if (uninitialized == true)

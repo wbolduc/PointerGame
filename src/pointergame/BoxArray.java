@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class BoxArray extends Box{
     private ArrayList<Box> boxes = new ArrayList<Box>();
     private int arraySize;
-    private Def arrayElementType;
+    private Def arrayElementDef;
     private DefArray arrayDef;
     //used for graphics
     private Orientation orientation;
@@ -26,12 +26,12 @@ public class BoxArray extends Box{
     {
         super(x, y);
         this.arrayDef = arrayDef;
-        arrayElementType = arrayDef.indexType;
+        arrayElementDef = arrayDef.indexType;
         arraySize = arrayDef.arraySize;
 
         this.orientation = orientation;
         
-        Class type = arrayElementType.type;
+        Class type = arrayElementDef.type;
         
         
         size = new Size2D(0,0);
@@ -46,7 +46,7 @@ public class BoxArray extends Box{
                 for (int i = 0; i < arraySize; i++)
                 {
                     //Add Box to array
-                    toAdd = new BoxStruct(x, y + size.y, Orientation.HORIZONTAL, (DefStruct) arrayElementType);
+                    toAdd = new BoxStruct(x, y + size.y, Orientation.VERTICAL, (DefStruct) arrayElementDef);
                     boxes.add(toAdd);
                     //increase array graphical size by the size of that box
                     size.y += toAdd.size.y;
@@ -57,7 +57,7 @@ public class BoxArray extends Box{
                 for (int i = 0; i < arraySize; i++)
                 {
                     //Add Box to array
-                    toAdd = new BoxArray(x, y + size.y, Orientation.HORIZONTAL, (DefArray) arrayElementType);
+                    toAdd = new BoxArray(x, y + size.y, Orientation.VERTICAL, (DefArray) arrayElementDef);
                     boxes.add(toAdd);
                     //increase array graphical size by the size of that box
                     size.y += toAdd.size.y;
@@ -94,7 +94,7 @@ public class BoxArray extends Box{
                 for (int i = 0; i < arraySize; i++)
                 {
                     //Add Box to array
-                    toAdd = new BoxStruct(x + size.x, y, Orientation.VERTICAL, (DefStruct) arrayElementType);
+                    toAdd = new BoxStruct(x + size.x, y, Orientation.HORIZONTAL, (DefStruct) arrayElementDef);
                     boxes.add(toAdd);
                     //increase array graphical size by the size of that box
                     size.x += toAdd.size.x;
@@ -105,7 +105,7 @@ public class BoxArray extends Box{
                 for (int i = 0; i < arraySize; i++)
                 {
                     //Add Box to array
-                    toAdd = new BoxArray(x + size.x, y, Orientation.VERTICAL, (DefArray) arrayElementType);
+                    toAdd = new BoxArray(x + size.x, y, Orientation.HORIZONTAL, (DefArray) arrayElementDef);
                     boxes.add(toAdd);
                     //increase array graphical size by the size of that box
                     size.x += toAdd.size.x;
@@ -135,6 +135,7 @@ public class BoxArray extends Box{
             }
             size.y = toAdd.size.y;
         }
+        effectiveSize = size.clone().incrementBy(MIN_SPACING);
     }
     
     //Setters    
@@ -163,7 +164,7 @@ public class BoxArray extends Box{
         //check for matching type
         
         //TODO: FIX THIS
-        /*if (box.getClass() != arrayElementType)
+        /*if (box.getClass() != arrayElementDef)
         {
             System.err.println("Wrong box type cannot store");
             return;
@@ -190,7 +191,7 @@ public class BoxArray extends Box{
     
     public Def getBoxType()
     {
-        return arrayElementType;
+        return arrayElementDef;
     }
     
     //Util    
@@ -232,15 +233,97 @@ public class BoxArray extends Box{
     
     
     //Graphics
+    
+    public Size2D setArrange(int x, int y)  //moves this structure and calls arrange
+    {
+        this.moveTo(x, y);
+        Size2D connectedSize = this.arrange(x, y);
+        
+        if (orientation == Orientation.VERTICAL)
+        {
+            effectiveSize.x += connectedSize.x;
+            if (effectiveSize.y < connectedSize.y)
+                effectiveSize.y = connectedSize.y;
+        }
+        else
+        {
+            effectiveSize.y += connectedSize.y;
+            if (effectiveSize.x < connectedSize.x)
+                effectiveSize.x = connectedSize.x;
+        }
+        return effectiveSize;
+    }
+    
+    public Size2D arrange(int x, int y)     //arranges things connected to this structure by pointer
+    {
+        Size2D connectedSize = new Size2D(0,0); //the size of the things connected to this structure by pointers
+        Size2D subSize;
+        
+        if (orientation == Orientation.VERTICAL)
+        {
+            for(Box b : boxes)
+            {
+                subSize = b.arrange(x + size.x + MIN_SPACING.x, y + connectedSize.y);
+                connectedSize.y += subSize.y;
+                if (connectedSize.x < subSize.x)
+                    connectedSize.x = subSize.x;
+            }
+        }
+        else //horizontal
+        {
+            for(Box b : boxes)
+            {
+                subSize = b.arrange(x + connectedSize.x, y + size.y + MIN_SPACING.y);
+                connectedSize.x += subSize.x;
+                if (connectedSize.y < subSize.y)
+                    connectedSize.y = subSize.y;
+            }
+        }
+        return connectedSize;
+    }
+    
+    
+    /*
+    public void arrange()
+    {
+        if (arrayElementDef.type == PointerBox.class)
+        {
+            
+        }
+        
+        Size2D pointingSize;
+        int offset = 0;
+        if (orientation.VERTICAL == orientation)
+        {
+            for (Box b : boxes)
+            {
+                pointingSize = b.getEffectiveSize();
+                b.moveTo(x+size.x + MIN_SPACING, y + offset);
+                offset += pointingSize.y;
+            }
+        }
+        else
+        {
+            for (Box b : boxes)
+            {
+                pointingSize = b.getEffectiveSize();
+                b.moveTo(x + offset, y+size.y + MIN_SPACING);
+                offset += pointingSize.x;
+            }
+        }
+    }
+    */
+    
     @Override
     public void drawBox(GraphicsContext gc)
     {
-        gc.setStroke(Color.GREEN);
-        gc.strokeRect(x-2, y-2, size.x+4, size.y+4);
-        System.out.println(boxes.size());
         for (Box b : boxes)
         {
             b.drawBox(gc);
         }
+        gc.setStroke(Color.GREEN);
+        gc.strokeRect(x, y, size.x, size.y);
+        gc.setStroke(Color.GRAY);
+        gc.strokeRect(x, y, effectiveSize.x, effectiveSize.y);
     }
 }

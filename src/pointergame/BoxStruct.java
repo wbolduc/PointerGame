@@ -17,6 +17,9 @@ public class BoxStruct extends Box{
     private DefStruct structDef;
     private HashMap<String,Box> elements = new HashMap<String,Box>();
     
+    private final int STRUCT_THICKNESS = 4;
+    private final Color STRUCT_COLOR = Color.DARKORANGE;
+    
     private int maxNameLength = 0;
     
     BoxStruct(int x, int y, Orientation orientation, DefStruct structDef)
@@ -35,9 +38,9 @@ public class BoxStruct extends Box{
                 Class type = e.type;
                 Box toAdd;
                 if (type == BoxStruct.class)
-                    toAdd = new BoxStruct(x,y+size.y,Orientation.HORIZONTAL, (DefStruct)e);
+                    toAdd = new BoxStruct(x,y+size.y,Orientation.VERTICAL, (DefStruct)e);
                 else if (type == BoxArray.class)
-                    toAdd = new BoxArray(x,y+size.y,Orientation.HORIZONTAL, (DefArray)e);
+                    toAdd = new BoxArray(x,y+size.y,Orientation.VERTICAL, (DefArray)e);
                 else if (type == PointerBox.class)
                     toAdd = new PointerBox(x,y+size.y,Orientation.HORIZONTAL);
                 else //valueBox
@@ -60,9 +63,9 @@ public class BoxStruct extends Box{
                 Class type = e.type;
                 Box toAdd;
                 if (type == BoxStruct.class)
-                    toAdd = new BoxStruct(x+size.x,y,Orientation.VERTICAL, (DefStruct)e);
+                    toAdd = new BoxStruct(x+size.x,y,Orientation.HORIZONTAL, (DefStruct)e);
                 else if (type == BoxArray.class)
-                    toAdd = new BoxArray(x+size.x,y,Orientation.VERTICAL, (DefArray)e);
+                    toAdd = new BoxArray(x+size.x,y,Orientation.HORIZONTAL, (DefArray)e);
                 else if (type == PointerBox.class)
                     toAdd = new PointerBox(x+size.x,y,Orientation.VERTICAL);
                 else //valueBox
@@ -76,7 +79,8 @@ public class BoxStruct extends Box{
                 if(size.y < toAdd.size.y)
                     size.y = toAdd.size.y;
             }
-        }    
+        }
+        //size.incrementBy(STRUCT_THICKNESS, STRUCT_THICKNESS);
     }
     
     public void moveBy(int x, int y)
@@ -142,16 +146,50 @@ public class BoxStruct extends Box{
         }
     }   
     
-    //graphics
-    @Override
+    //graphics    
+    public Size2D setArrange(int x, int y)  //moves this structure and calls arrange
+    {
+        this.moveTo(x, y);
+        return this.arrange(x, y);
+    }
+    
+    public Size2D arrange(int x, int y)     //arranges things connected to this structure by pointer
+    {
+        Size2D connectedSize = new Size2D(0,0);
+        Size2D subSize;
+        
+        if (orientation == Orientation.VERTICAL)
+        {
+            for(Box b : elements.values())
+            {
+                subSize = b.arrange(x + size.x + MIN_SPACING, y + connectedSize.y);
+                connectedSize.y += subSize.y;
+                if (connectedSize.x < subSize.x)
+                    connectedSize.x = subSize.x;
+            }
+        }
+        else //horizontal
+        {
+            for(Box b : elements.values())
+            {
+                subSize = b.arrange(x + connectedSize.x, y + size.y + MIN_SPACING);
+                connectedSize.x += subSize.x;
+                if (connectedSize.y < subSize.y)
+                    connectedSize.y = subSize.y;
+            }
+        }
+        
+        return connectedSize;
+    }
+    
     public void drawBox(GraphicsContext gc)
     {
-        gc.setStroke(Color.DARKORANGE);
-        gc.strokeRect(x-2, y-2, size.x+4, size.y+4);
         for (Box b : elements.values())
         {
             b.drawBox(gc);
         }
+        gc.setStroke(STRUCT_COLOR);
+        gc.strokeRect(x,y,size.x, size.y);
     }
     
 }

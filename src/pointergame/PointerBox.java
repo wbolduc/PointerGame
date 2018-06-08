@@ -48,6 +48,18 @@ public class PointerBox extends Box{
         return pointingTo;
     }
     
+    public Size2D getConnectedSize()
+    {
+        if (pointingTo == null && !(pointingTo instanceof BadBox))
+        {
+            return pointingTo.getEffectiveSize();
+        }
+        else
+        {
+            return new Size2D(0,0);
+        }
+    }
+    
     //Util
     public void showChain(String indent)
     {   
@@ -64,8 +76,27 @@ public class PointerBox extends Box{
     }
     
     //graphics
+    
+    public Size2D setArrange(int x, int y)
+    {
+        
+    }
+    
+    public Size2D arrange(int x, int y)
+    {
+        if(pointingTo == null)
+            return new Size2D(0,0); //might give this a size for null
+        else if (pointingTo instanceof BadBox)
+            return new Size2D(0,0);
+        else
+            return pointingTo.setArrange(x, y);
+    }
+    
     public void drawBox(GraphicsContext gc)
     {
+        gc.setStroke(Color.CHARTREUSE);
+        //gc.strokeRect(x, y, effectiveSize.x, effectiveSize.y);
+        
         gc.setStroke(Color.BLACK);
         gc.strokeRect(x, y, size.x, size.y);
         

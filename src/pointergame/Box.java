@@ -18,12 +18,14 @@ import javafx.scene.paint.Color;
 
 
 public class Box {    
-    public static final int BOX_SIZE = 50;
+    public static final int BOX_SIZE = 45;
+    public static final Size2D MIN_SPACING = new Size2D(20,20);
     public static final String MIN_INDENT = "  ";
     protected int x;
     protected int y;
     
     protected Size2D size = new Size2D(BOX_SIZE, BOX_SIZE);
+    protected Size2D effectiveSize = size.clone().incrementBy(MIN_SPACING);
     protected Orientation orientation = Orientation.HORIZONTAL;
     
     private ArrayList<Box> pointedToBy = new ArrayList<Box>();
@@ -81,6 +83,11 @@ public class Box {
     }
     
     //Getters
+    public Size2D getEffectiveSize()
+    {
+        return effectiveSize;
+    }
+    
     public int getX()
     {
         return x;
@@ -139,6 +146,17 @@ public class Box {
     }
     
     //graphics
+    public Size2D setArrange(int x, int y)  //moves this structure and calls arrange
+    {
+        this.moveTo(x, y);
+        return effectiveSize;
+    }
+    
+    public Size2D arrange(int x, int y)     //arranges things connected to this structure by pointer
+    {
+        return new Size2D(0,0);
+    }
+    
     public void drawBox(GraphicsContext gc)
     {
         gc.setStroke(Color.BLUEVIOLET);
